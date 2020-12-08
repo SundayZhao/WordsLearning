@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/activity_main_layout"
+    tools:context="com.MainView.MainActivity">
+    <EditText
+        android:layout_above="@+id/homepage_vp"
+        android:layout_alignParentTop="true"
+        android:id="@+id/homepage_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/homepage_vp"
+        android:layout_above="@+id/tabbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.jpeng.jptabbar.JPTabBar
+        android:layout_alignParentBottom="true"
+        android:id="@+id/tabbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/homepage_tabbar_shape"
+        app:TabMiddleView="@layout/activity_main_tabbar_middlebuttion"
+        app:TabNormalColor="#bfbfbf"
+        app:TabSelectColor="#1afa29"
+        app:TabIconSize="25dp"
+        app:TabTextSize="15sp"
+        app:TabMargin="4dp"
+        app:TabPageAnimateEnable="true"
+        app:BadgePadding="4dp"
+        app:BadgeTextSize="10dp"
+        app:TabIconFilter="true"
+        app:TabMiddleBottomDis="15dp"
+        app:TabMiddleHMargin="50dp"
+        />
+</RelativeLayout>
