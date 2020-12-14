@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
 
 
         //初始化tabbar
-
+        initViews();
     }
 
     /*
