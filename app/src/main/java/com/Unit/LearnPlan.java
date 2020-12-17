@@ -21,4 +21,9 @@ public class LearnPlan {
 
     //已经打卡的日期
     private ArrayList<Date> last_Signin=null;
+
+    //打卡，具体的返回参数之后再说明
+    public int clockIn(){
+        return 0;
+    }
 }
