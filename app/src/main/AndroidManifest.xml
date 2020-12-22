@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WordsLearning">
 
+
         <activity android:name=".MainView.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +21,8 @@
         </activity>
 
     </application>
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

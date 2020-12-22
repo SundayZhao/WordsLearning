@@ -14,29 +14,21 @@
         android:layout_height="0dp"/>
 
 
+
+
+
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/homepage_vp"
-        android:layout_above="@+id/tabbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_above="@+id/tabbar"/>
 
-    <com.jpeng.jptabbar.JPTabBar
+    <com.qmuiteam.qmui.widget.tab.QMUITabSegment
         android:layout_alignParentBottom="true"
-        android:id="@+id/tabbar"
-        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/homepage_tabbar_shape"
-        app:TabMiddleView="@layout/activity_main_tabbar_middlebuttion"
-        app:TabNormalColor="#bfbfbf"
-        app:TabSelectColor="#1afa29"
-        app:TabIconSize="25dp"
-        app:TabTextSize="15sp"
-        app:TabMargin="4dp"
-        app:TabPageAnimateEnable="true"
-        app:BadgePadding="4dp"
-        app:BadgeTextSize="10dp"
-        app:TabIconFilter="true"
-        app:TabMiddleBottomDis="15dp"
-        app:TabMiddleHMargin="50dp"
-        />
+        android:layout_width="match_parent"
+        android:id="@+id/tabbar"
+        app:qmui_tab_icon_position="top"/>
 </RelativeLayout>

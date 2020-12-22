@@ -1,36 +1,47 @@
 package com.MainView.Personal;
 
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.GridView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.R;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.wildma.pictureselector.PictureBean;
+import com.wildma.pictureselector.PictureSelector;
+
+
+import java.util.ArrayList;
 
 
 public class PersonalFragment extends Fragment {
 
+
     private View rootView; //这是个fragment，没有完整生命周期，需要有一个rootView一般别动
-    private static boolean isFirstLoad  = true;//这是个bug，如果不加完成标志，fragment会重复加载，导致部分数据重复初始化
+    private static boolean isFirstLoad = true;//这是个bug，如果不加完成标志，fragment会重复加载，导致部分数据重复初始化
 
     /*
 组件
  */
-    private TextView testView=null;
+    private QMUIRadiusImageView profilePhotoView = null;//圆形头像框
+    private QMUIBottomSheet.BottomListSheetBuilder profilePhotoSelectorBuilder = null;//下面弹出那个选择头像的dialog
+    private GridView utilsGridView=null;//功能菜单
 
-    public PersonalFragment(){
-        // Required empty public constructor
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View thisView=inflater.inflate(R.layout.fragment_personal,null);
+        View thisView = inflater.inflate(R.layout.fragment_personal, null);
         initView(thisView);
         return thisView;
     }
@@ -51,15 +62,69 @@ public class PersonalFragment extends Fragment {
         }
     }
 
+
     /**
      * 初始化视图
      *
      * @param view
      */
     protected void initView(View view) {
-        testView=(TextView)view.findViewById(R.id.textView2);
-        testView.setText("这就是第二个fragment");
+        profilePhotoView = (QMUIRadiusImageView) view.findViewById(R.id.personalProfilePhoto);
+        profilePhotoSelectorBuilder = new QMUIBottomSheet.BottomListSheetBuilder(getActivity());
+        utilsGridView=(GridView)view.findViewById(R.id.personal_gridview);
+        //初始化头像框相关的东西
+        initprofilePhotoView();
+        //初始化下方的列表
+        initutilsGridView();
+    }
+
+    private void initutilsGridView() {
+        ArrayList<GridListItem> gridListItems=new ArrayList<GridListItem>(3);
+        gridListItems.add(new GridListItem("错词本",R.drawable.wrongcollectionnormal,R.drawable.wrongcollectionselected));
+        gridListItems.add(new GridListItem("生词本",R.drawable.diffcollectionnormal,R.drawable.diffcollectionselected));
+        gridListItems.add(new GridListItem("学习计划",R.drawable.learnplannormal,R.drawable.learnplanselected));
+        gridListItems.add(new GridListItem("学习设置",R.drawable.optionsnormal,R.drawable.optionsselected));
+        gridListItems.add(new GridListItem("学习数据",R.drawable.learndatanormal,R.drawable.learndataselected));
+        gridListItems.add(new GridListItem("个人信息",R.drawable.personalinformationnormal,R.drawable.personalinformationselected));
+        //gridListItems.add(new GridListItem("隐私政策",R.drawable.wrongcollectionnormal,R.drawable.wrongcollectionselected));
+        gridListItems.add(new GridListItem("用户协议",R.drawable.useragreementnormal,R.drawable.useragreementselected));
+        gridListItems.add(new GridListItem("关于我们",R.drawable.aboutusnormal,R.drawable.aboutusselected));
+        gridListItems.add(new GridListItem("给个好评",R.drawable.favoratenormal,R.drawable.favorateselected));
+        GvJJAdapter gvJJAdapter =new GvJJAdapter(getContext(),gridListItems);
+        utilsGridView.setAdapter(gvJJAdapter);
+
     }
 
 
+    private void initprofilePhotoView() {
+        profilePhotoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PictureSelector
+                        .create(PersonalFragment.this, PictureSelector.SELECT_REQUEST_CODE)
+                        .selectPicture(false);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /*结果回调*/
+        if (requestCode == PictureSelector.SELECT_REQUEST_CODE) {
+            if (data != null) {
+                PictureBean pictureBean = data.getParcelableExtra(PictureSelector.PICTURE_RESULT);
+                if (pictureBean.isCut()) {
+                    profilePhotoView.setImageBitmap(BitmapFactory.decodeFile(pictureBean.getPath()));
+                } else {
+                    profilePhotoView.setImageURI(pictureBean.getUri());
+                }
+
+                //使用 Glide 加载图片
+                /*Glide.with(this)
+                        .load(pictureBean.isCut() ? pictureBean.getPath() : pictureBean.getUri())
+                        .apply(RequestOptions.centerCropTransform()).into(mIvImage);*/
+            }
+        }
+    }
 }

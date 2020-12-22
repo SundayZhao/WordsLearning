@@ -1,11 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/personalbackground">
 
-    <TextView
-        android:id="@+id/textView2"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="个人信息页面" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:paddingBottom="20dp"
+            android:background="@drawable/shape_corner"
+            android:orientation="vertical">
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/personalProfilePhoto"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:clickable="true"
+                android:src="@drawable/headphoto"
+                app:qmui_is_circle="true"
+                app:qmui_selected_border_color="?attr/qmui_config_color_gray_4"
+                app:qmui_selected_border_width="1px"
+                app:qmui_selected_mask_color="?attr/qmui_config_color_gray_8" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="你的名字"
+                android:textSize="20dp"
+                />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/personalGridviewLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_corner_up"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="1dp"
+            >
+
+            <GridView
+                android:id="@+id/personal_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="10dp"
+                android:horizontalSpacing="1dp"
+                android:numColumns="4"
+                android:verticalSpacing="1dp" />
+        </LinearLayout>
+    </LinearLayout>
+</com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout>
