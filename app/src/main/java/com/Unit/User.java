@@ -1,10 +1,34 @@
 package com.Unit;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.dao.RemotoDatabase;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.UUID;
+
 /*
 进行登录、注册、获取个人信息的用户类
  */
-public class User {
+public  class  User {
+    private final String TABLE_NAME="user";
+    public static  final int LOG_LOGIN_FAIL=0;
+    public static  final int LOG_LOGIN_SUCCESS=1;
 
+    //必须是appcontext，不是basecontext
+    private Context AppContext=null;
+
+    //静态单实例，用User.getInstance()来拿到这个实例，再通过这个实例操作下面这些玩意
+    private static User instance = null;
+
+    //是否登录
+    private boolean isLog=false;
     //token，在登录后获得一个token，一个账号每次登陆唯一
     private String token=null;
     //账户昵称
@@ -14,17 +38,81 @@ public class User {
     //账号
     private String username=null;
     //用户的单词学习计划
-    private LearnPlan lp=null;
+    private LearnPlan learnPlan=null;
     //错词本
-    private WrongCollection wc=null;
+    private WrongCollection wrongCollection=null;
     //生词本
-    private DiffCollection dc=null;
+    private DiffCollection diffCollection=null;
     //手机号
-    private int phoneNum=0;
+    private String phoneNum=null;
     //邮箱
     private String email=null;
     //个人配置
     private Preference preference=null;
+    //头像的文件名
+    private String headImage=null;
+
+    private User(Context AppContext){
+        this.AppContext=AppContext;
+    }
+
+    //判断当前是否登录
+    public boolean isLogged(){
+        if(!isLog) return false;
+        return true;
+    }
+    public static synchronized User getInstance(Context AppContext) {
+        if(instance==null){
+            instance=new User(AppContext);
+        }
+        return instance;
+    }
+
+    //登录，传入用户名，密码
+    public int logIn(String username,String password){
+        RemotoDatabase remotoDatabase=RemotoDatabase.getInstance(AppContext);
+        SQLiteDatabase sqliteDatabase = remotoDatabase.getReadableDatabase();
+        Cursor cursor = sqliteDatabase.query(TABLE_NAME,
+                new String[]{"uuid","nickname","LearnPlanId","WrongCollectionId",
+                        "DiffCollectionID","phoneNum","email","preferenceId","headImage"},
+                "username=? and password=?",
+                new String[]{username,password},
+                null,null,null);
+        if(cursor.moveToFirst()){
+            this.nickName=cursor.getString(cursor.getColumnIndex("nickname"));
+            this.uuid=cursor.getInt(cursor.getColumnIndex("uuid"));
+            this.username=username;
+            this.learnPlan=new LearnPlan(cursor.getInt(cursor.getColumnIndex("LearnPlanId")));
+            this.wrongCollection=new WrongCollection(cursor.getInt(cursor.getColumnIndex("WrongCollectionId")));
+            this.diffCollection=new DiffCollection(cursor.getInt(cursor.getColumnIndex("DiffCollectionID")));
+            this.phoneNum=cursor.getString(cursor.getColumnIndex("phoneNum"));
+            this.email=cursor.getString(cursor.getColumnIndex("email"));
+            this.preference=new Preference(cursor.getInt(cursor.getColumnIndex("preferenceId")));
+            this.headImage=cursor.getString(cursor.getColumnIndex("headImage"));
+            this.isLog=true;
+            return LOG_LOGIN_SUCCESS;
+        }else{
+            this.isLog=false;
+            return LOG_LOGIN_FAIL;
+        }
+    }
+
+    public void logOut(){
+        isLog=false;
+    }
+
+    public void registe(String username,String password,String nickName,String email,String phoneNum){
+        this.username=username;
+        this.nickName=nickName;
+        this.uuid= UUID.randomUUID().hashCode();
+        this.email=email;
+        this.phoneNum=phoneNum;
+        //TODO:默认的生词本
+        //TODO:默认的错词本
+        //TODO:默认的配置
+        //TODO:无计划，但是先生成一行
+        //TODO:头像也默认
+    }
 
     public String getToken() {
         return token;
@@ -39,6 +127,7 @@ public class User {
     }
 
     public void setNickName(String nickName) {
+        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,String.valueOf(uuid),new String[]{"nickName"},new String[]{nickName});
         this.nickName = nickName;
     }
 
@@ -46,23 +135,16 @@ public class User {
         return uuid;
     }
 
-    public void setUuid(int uuid) {
-        this.uuid = uuid;
-    }
-
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public int getPhoneNum() {
+    public String getPhoneNum() {
         return phoneNum;
     }
 
-    public void setPhoneNum(int phoneNum) {
+    public void setPhoneNum(String phoneNum) {
+        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,String.valueOf(uuid),new String[]{"phoneNum"},new String[]{phoneNum});
         this.phoneNum = phoneNum;
     }
 
@@ -71,6 +153,26 @@ public class User {
     }
 
     public void setEmail(String email) {
+        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,String.valueOf(uuid),new String[]{"email"},new String[]{email});
         this.email = email;
+    }
+
+
+    public Bitmap getHeadImage() {
+        FileInputStream fs = null;
+        try {
+            fs = new FileInputStream(this.headImage);
+            Bitmap bitmap  = BitmapFactory.decodeStream(fs);
+            return bitmap;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public void setHeadImage(String headImage) {
+        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,String.valueOf(uuid),new String[]{"headImage"},new String[]{headImage});
+        this.headImage = headImage;
     }
 }

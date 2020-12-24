@@ -27,7 +27,7 @@
             android:layout_centerHorizontal="true"
             android:text="快速推荐"
             android:textColor="@color/black"
-            android:textSize="16dp"/>
+            android:textSize="18dp"/>
     </RelativeLayout>
 
 

@@ -7,7 +7,7 @@ public abstract class Collection {
     private Long CollectionVersion =0L;
 
     //初始化单词书
-    public abstract int initCollection(User user);
+    public abstract int initCollection();
 
     //刷新单词书，用来刷新列表
     public abstract int flushCollection(User user);

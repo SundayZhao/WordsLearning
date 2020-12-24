@@ -1,5 +1,7 @@
 package com.MainView.Personal;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -11,7 +13,10 @@ import android.widget.GridView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.MainView.MainActivity;
 import com.R;
+import com.Unit.DiffCollection;
+import com.Unit.User;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.wildma.pictureselector.PictureBean;
@@ -79,19 +84,21 @@ public class PersonalFragment extends Fragment {
     }
 
     private void initutilsGridView() {
-        ArrayList<GridListItem> gridListItems=new ArrayList<GridListItem>(3);
-        gridListItems.add(new GridListItem("错词本",R.drawable.wrongcollectionnormal,R.drawable.wrongcollectionselected));
-        gridListItems.add(new GridListItem("生词本",R.drawable.diffcollectionnormal,R.drawable.diffcollectionselected));
-        gridListItems.add(new GridListItem("学习计划",R.drawable.learnplannormal,R.drawable.learnplanselected));
-        gridListItems.add(new GridListItem("学习设置",R.drawable.optionsnormal,R.drawable.optionsselected));
-        gridListItems.add(new GridListItem("学习数据",R.drawable.learndatanormal,R.drawable.learndataselected));
-        gridListItems.add(new GridListItem("个人信息",R.drawable.personalinformationnormal,R.drawable.personalinformationselected));
+        ArrayList<GridListItem> gridListItems=new ArrayList<GridListItem>( 3);
+        gridListItems.add(new GridListItem("错词本",GridListCallBack.STATE_DIFF_COLLECTION,R.drawable.wrongcollectionnormal,R.drawable.wrongcollectionselected));
+        gridListItems.add(new GridListItem("生词本",GridListCallBack.STATE_WRONG_COLLECTION,R.drawable.diffcollectionnormal,R.drawable.diffcollectionselected));
+        gridListItems.add(new GridListItem("学习计划",GridListCallBack.STATE_WRONG_COLLECTION,R.drawable.learnplannormal,R.drawable.learnplanselected));
+        gridListItems.add(new GridListItem("学习设置",GridListCallBack.STATE_WRONG_COLLECTION,R.drawable.optionsnormal,R.drawable.optionsselected));
+        gridListItems.add(new GridListItem("学习数据",GridListCallBack.STATE_LEARN_DATA,R.drawable.learndatanormal,R.drawable.learndataselected));
+        gridListItems.add(new GridListItem("个人信息",GridListCallBack.STATE_WRONG_COLLECTION,R.drawable.personalinformationnormal,R.drawable.personalinformationselected));
         //gridListItems.add(new GridListItem("隐私政策",R.drawable.wrongcollectionnormal,R.drawable.wrongcollectionselected));
-        gridListItems.add(new GridListItem("用户协议",R.drawable.useragreementnormal,R.drawable.useragreementselected));
-        gridListItems.add(new GridListItem("关于我们",R.drawable.aboutusnormal,R.drawable.aboutusselected));
-        gridListItems.add(new GridListItem("给个好评",R.drawable.favoratenormal,R.drawable.favorateselected));
-        GvJJAdapter gvJJAdapter =new GvJJAdapter(getContext(),gridListItems);
+        gridListItems.add(new GridListItem("用户协议",GridListCallBack.STATE_USER_AGREEMENT,R.drawable.useragreementnormal,R.drawable.useragreementselected));
+        gridListItems.add(new GridListItem("关于我们",GridListCallBack.STATE_ABOUT_US,R.drawable.aboutusnormal,R.drawable.aboutusselected));
+        gridListItems.add(new GridListItem("给个好评",GridListCallBack.STATE_FAVORATE,R.drawable.favoratenormal,R.drawable.favorateselected));
+        GvJJAdapter gvJJAdapter =new GvJJAdapter(getContext(),gridListItems,new GridListCallBack(getContext()));
         utilsGridView.setAdapter(gvJJAdapter);
+
+        //TODO：每个item的点击事件
 
     }
 
@@ -100,9 +107,16 @@ public class PersonalFragment extends Fragment {
         profilePhotoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PictureSelector
-                        .create(PersonalFragment.this, PictureSelector.SELECT_REQUEST_CODE)
-                        .selectPicture(false);
+                if(User.getInstance(getContext()).isLogged()){
+                    //已经登录了，选头像
+                    //TODO:选择头像后的持久化
+                    PictureSelector
+                            .create(PersonalFragment.this, PictureSelector.SELECT_REQUEST_CODE)
+                            .selectPicture(false);
+                }else{
+                    //TODO:打开登录界面
+                }
+
             }
         });
     }
@@ -128,3 +142,5 @@ public class PersonalFragment extends Fragment {
         }
     }
 }
+
+

@@ -23,10 +23,12 @@ import java.util.ArrayList;
 public class GvJJAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<GridListItem> graidListItems=null;
+    private GridListCallBack gridListCallBack=null;
 
-    public GvJJAdapter(Context mContext,ArrayList<GridListItem>  graidListItems) {
+    public GvJJAdapter(Context mContext,ArrayList<GridListItem>  graidListItems,GridListCallBack gridListCallBack) {
         this.mContext = mContext;
         this.graidListItems=graidListItems;
+        this.gridListCallBack=gridListCallBack;
     }
 
     @Override
@@ -70,7 +72,12 @@ public class GvJJAdapter extends BaseAdapter {
         listDrawable.addState(new int[]{}, normalDrawable);
         viewHOlder.image.setBackground(listDrawable);
         // gridView 的点击事件
-
+        viewHOlder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gridListCallBack.callbackFunction(graidListItems.get(position).getCallbackId());
+            }
+        });
         return convertView;
     }
 

@@ -3,8 +3,10 @@ package com.Unit;
 import java.util.ArrayList;
 
 public class WrongCollection extends Collection{
+    private  int collectionId=0;
+
     @Override
-    public int initCollection(User user) {
+    public int initCollection() {
         return 0;
     }
 
@@ -36,5 +38,10 @@ public class WrongCollection extends Collection{
     @Override
     public int addWords(ArrayList<String> words) {
         return 0;
+    }
+
+    public WrongCollection(int collectionId){
+        this.collectionId=collectionId;
+        initCollection();
     }
 }

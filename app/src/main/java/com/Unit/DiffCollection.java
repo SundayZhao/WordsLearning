@@ -3,8 +3,9 @@ package com.Unit;
 import java.util.ArrayList;
 
 public class DiffCollection extends  Collection{
+    private  int collectionId=0;
     @Override
-    public int initCollection(User user) {
+    public int initCollection() {
         return 0;
     }
 
@@ -36,5 +37,10 @@ public class DiffCollection extends  Collection{
     @Override
     public int addWords(ArrayList<String> words) {
         return 0;
+    }
+
+    public DiffCollection(int collectionId){
+        this.collectionId=collectionId;
+        initCollection();
     }
 }

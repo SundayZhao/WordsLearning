@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class LearnPlan {
     //计划的唯一编号
-    private String learnPlanVersion=null;
+    private int LearnPlanId=0;
 
     //创建日期
     private Date createTime=null;
@@ -25,5 +25,16 @@ public class LearnPlan {
     //打卡，具体的返回参数之后再说明
     public int clockIn(){
         return 0;
+    }
+
+    public LearnPlan(int LearnPlanId){
+        this.LearnPlanId=LearnPlanId;
+        initLearnPlan();
+    }
+    private void initLearnPlan(){
+        if(LearnPlanId==0)return;
+        else{
+            //TODO:从sqlite里面拿到learnplan
+        }
     }
 }
