@@ -175,4 +175,34 @@ public  class  User {
         RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,String.valueOf(uuid),new String[]{"headImage"},new String[]{headImage});
         this.headImage = headImage;
     }
+//  word
+
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public LearnPlan getLearnPlan() {
+        return learnPlan;
+    }
+
+    public void setLearnPlan(LearnPlan learnPlan) {
+        this.learnPlan = learnPlan;
+    }
+
+    public WrongCollection getWrongCollection() {
+        return wrongCollection;
+    }
+
+    public void setWrongCollection(WrongCollection wrongCollection) {
+        this.wrongCollection = wrongCollection;
+    }
+
+    public DiffCollection getDiffCollection() {
+        return diffCollection;
+    }
+
+    public void setDiffCollection(DiffCollection diffCollection) {
+        this.diffCollection = diffCollection;
+    }
 }

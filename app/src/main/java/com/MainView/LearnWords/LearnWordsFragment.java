@@ -1,10 +1,12 @@
 package com.MainView.LearnWords;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import sun.bob.mcalendarview.MCalendarView;
+import sun.bob.mcalendarview.vo.DateData;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +14,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.R;
+import com.Unit.LearnPlan;
+import com.Unit.User;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 
 public class LearnWordsFragment extends Fragment {
@@ -22,8 +29,10 @@ public class LearnWordsFragment extends Fragment {
     /*
     组件
      */
-    private TextView testView=null;
-    private ImageView testImg=null;
+    private TextView textView =null;
+    private MCalendarView calendarView = null;
+
+    private User user= User.getInstance(getContext());
 
     public LearnWordsFragment(){
         // Required empty public constructor
@@ -33,6 +42,9 @@ public class LearnWordsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View thisView=inflater.inflate(R.layout.fragment_learnword,null);
+
+
+
         initView(thisView);
         return thisView;
     }
@@ -59,9 +71,15 @@ public class LearnWordsFragment extends Fragment {
      * @param view
      */
     protected void initView(View view) {
-        testView=(TextView)view.findViewById(R.id.textView);
-        testView.setText("这就是第一个fragment");
-        testImg=(ImageView)view.findViewById(R.id.imageView);
+        textView =(TextView)view.findViewById(R.id.textView);
+        calendarView = (MCalendarView) view.findViewById(R.id.mCalendarView);
+        LearnPlan learnPlan = user.getLearnPlan();
+        ArrayList<DateData> finished_dates = learnPlan.getFinished_dates();
+
+        for(int i=0;i<finished_dates.size();i++) {
+            calendarView.markDate(finished_dates.get(i).getYear(),finished_dates.get(i).getMonth(),finished_dates.get(i).getDay());
+        }
+
     }
 
 

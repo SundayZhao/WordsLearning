@@ -9,11 +9,26 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="学习单词的页面" />
+        android:gravity="center_horizontal"
+        android:text="学习单词的页面"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <ImageView
-        android:id="@+id/imageView"
+    <sun.bob.mcalendarview.MCalendarView
+        android:id="@+id/mCalendarView"
+        android:layout_width="match_parent"
+        android:layout_height="500dp" />
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/test" />
+        android:text=""/>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="kaishibeidanci" />
+    <!--    <CalendarView-->
+<!--        android:id="@+id/calendarView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" />-->
 </LinearLayout>

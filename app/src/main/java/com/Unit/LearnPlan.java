@@ -3,6 +3,8 @@ package com.Unit;
 import java.util.ArrayList;
 import java.util.Date;
 
+import sun.bob.mcalendarview.vo.DateData;
+
 public class LearnPlan {
     //计划的唯一编号
     private int LearnPlanId=0;
@@ -20,7 +22,7 @@ public class LearnPlan {
     private  Long weChartOrderId=0L;
 
     //已经打卡的日期
-    private ArrayList<Date> last_Signin=null;
+    private ArrayList<DateData> finished_dates=null;
 
     //打卡，具体的返回参数之后再说明
     public int clockIn(){
@@ -36,5 +38,13 @@ public class LearnPlan {
         else{
             //TODO:从sqlite里面拿到learnplan
         }
+    }
+
+    public ArrayList<DateData> getFinished_dates() {
+        return finished_dates;
+    }
+
+    public void setFinished_dates(ArrayList<DateData> finished_dates) {
+        this.finished_dates = finished_dates;
     }
 }
