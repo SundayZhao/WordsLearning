@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="学习单词的页面"
+        android:text="学习！"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <sun.bob.mcalendarview.MCalendarView
@@ -27,7 +27,7 @@
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="kaishibeidanci" />
+        android:text="开始背单词" />
     <!--    <CalendarView-->
 <!--        android:id="@+id/calendarView"-->
 <!--        android:layout_width="match_parent"-->
