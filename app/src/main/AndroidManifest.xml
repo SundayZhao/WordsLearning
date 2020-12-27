@@ -12,12 +12,38 @@
         android:authorities="爸爸们"
         android:theme="@style/Theme.WordsLearning">
 
+        <!--        用户登录窗口-->
+        <activity android:name=".UserView.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--        用户注册窗口-->
+        <activity android:name=".UserView.RegisterActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.RegisterActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!--        找回密码窗口-->
+        <activity android:name=".UserView.FindPwActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.RegisterActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <activity android:name=".MainView.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -56,27 +82,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!--        个人设置窗口-->
-        <activity android:name=".MainView.Personal.utilsActivity.PreferenceActivity">
+        <activity android:name=".MainView.LearnWords.WordsRemember">
             <intent-filter>
-                <action android:name="android.intent.action.PreferenceActivity" />
+                <action android:name="android.intent.action.WordsRemember" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!--        学习设置窗口-->
-        <activity android:name=".MainView.Personal.utilsActivity.LearnOptionActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.LearnOptionActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <!--        学习计划窗口-->
-        <activity android:name=".MainView.Personal.utilsActivity.LearnPlanActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.LearnPlanActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+
 
 
     </application>
