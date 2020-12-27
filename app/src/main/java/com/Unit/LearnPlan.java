@@ -61,7 +61,7 @@ public class LearnPlan {
             if(cursor.moveToFirst()){
                 LearnPlanId=cursor.getInt(cursor.getColumnIndex("LearnPlanId"));
                 createTime=cursor.getString(cursor.getColumnIndex("createTime"));
-                wordBook=new WordBook(appContext,cursor.getInt(cursor.getColumnIndex("wordBookId")));
+                wordBook=new WordBook(appContext,String.valueOf(cursor.getInt(cursor.getColumnIndex("wordBookId"))));
                 hasLearned=cursor.getInt(cursor.getColumnIndex("hasLearned"));
                 weChartOrderId=cursor.getString(cursor.getColumnIndex("weChartOrderId"));
 

@@ -47,6 +47,7 @@ dependencies {
     //滚动选择器
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
+    implementation 'sun.bob:mcalendarview:1.0.0'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
 
