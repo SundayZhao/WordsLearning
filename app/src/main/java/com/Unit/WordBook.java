@@ -1,6 +1,17 @@
 package com.Unit;
 
+import android.content.ContentValues;
+import android.content.Context;
+
+import com.dao.RemotoDatabase;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
 单词书类
@@ -13,4 +24,77 @@ public class WordBook {
     private  String bookName=null;
     //单词列表，一定不要获取整个单词书的列表，但是现在是本地操作，无所谓了
     private ArrayList<Word> words=null;
+
+    public WordBook(Context context, String bookId) {
+        this.bookId = Integer.valueOf(bookId);
+//        InputStream file = null;
+//        try {
+//            file = context.getAssets().open("EnWords.csv");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        List resultList = new ArrayList();
+//        int cnt = 0;
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(file));
+//        try {
+//            String csvLine;
+//            while ((csvLine = reader.readLine()) != null) {
+//                String[] row = csvLine.split(",");
+//                resultList.add(row);
+//                cnt++;
+//                if(cnt>=100) break;
+//            }
+//        }
+//        catch (IOException ex) {
+//            throw new RuntimeException("Error in reading CSV file: "+ex);
+//        }
+//        finally {
+//            try {
+//                file.close();
+//            }
+//            catch (IOException e) {
+//                throw new RuntimeException("Error while closing input stream: "+e);
+//            }
+//        }
+
+//        RemotoDatabase remotoDatabase = RemotoDatabase.getInstance(context);
+//        for(int i = 0; i< resultList.size(); i++){
+//            String[] line = (String[])resultList.get(i);
+//            ContentValues contentValues = new ContentValues();
+//            contentValues.put("word", line[0]);
+//            contentValues.put("trans", line[1]);
+//            remotoDatabase.addSqllite("WordBook", contentValues);
+//        }
+        InputStream file = null;
+        try {
+            file = context.getAssets().open("EnWords.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int cnt = 0;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(file));
+        try {
+            String csvLine;
+            while ((csvLine = reader.readLine()) != null) {
+                String[] row = csvLine.split(",");
+                Word word = new Word(row[0]);
+                word.setChinese(row[1]);
+                words.add(word);
+                cnt++;
+                if(cnt>=100) break;
+            }
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("Error in reading CSV file: "+ex);
+        }
+        finally {
+            try {
+                file.close();
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Error while closing input stream: "+e);
+            }
+        }
+
+    }
 }
