@@ -87,10 +87,10 @@ public class PersonalFragment extends Fragment {
         ArrayList<GridListItem> gridListItems=new ArrayList<GridListItem>( 3);
         gridListItems.add(new GridListItem("错词本",GridListCallBack.STATE_DIFF_COLLECTION,R.drawable.wrongcollectionnormal,R.drawable.wrongcollectionselected));
         gridListItems.add(new GridListItem("生词本",GridListCallBack.STATE_WRONG_COLLECTION,R.drawable.diffcollectionnormal,R.drawable.diffcollectionselected));
-        gridListItems.add(new GridListItem("学习计划",GridListCallBack.STATE_WRONG_COLLECTION,R.drawable.learnplannormal,R.drawable.learnplanselected));
-        gridListItems.add(new GridListItem("学习设置",GridListCallBack.STATE_WRONG_COLLECTION,R.drawable.optionsnormal,R.drawable.optionsselected));
+        gridListItems.add(new GridListItem("学习计划",GridListCallBack.STATE_LEARNPLANS,R.drawable.learnplannormal,R.drawable.learnplanselected));
+        gridListItems.add(new GridListItem("学习设置",GridListCallBack.STATE_LEARNOPTIONS,R.drawable.optionsnormal,R.drawable.optionsselected));
         gridListItems.add(new GridListItem("学习数据",GridListCallBack.STATE_LEARN_DATA,R.drawable.learndatanormal,R.drawable.learndataselected));
-        gridListItems.add(new GridListItem("个人信息",GridListCallBack.STATE_WRONG_COLLECTION,R.drawable.personalinformationnormal,R.drawable.personalinformationselected));
+        gridListItems.add(new GridListItem("个人设置",GridListCallBack.STATE_PREFERENCE,R.drawable.personalinformationnormal,R.drawable.personalinformationselected));
         //gridListItems.add(new GridListItem("隐私政策",R.drawable.wrongcollectionnormal,R.drawable.wrongcollectionselected));
         gridListItems.add(new GridListItem("用户协议",GridListCallBack.STATE_USER_AGREEMENT,R.drawable.useragreementnormal,R.drawable.useragreementselected));
         gridListItems.add(new GridListItem("关于我们",GridListCallBack.STATE_ABOUT_US,R.drawable.aboutusnormal,R.drawable.aboutusselected));

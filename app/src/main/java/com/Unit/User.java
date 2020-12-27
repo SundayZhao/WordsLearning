@@ -83,8 +83,8 @@ public  class  User {
             this.uuid=cursor.getInt(cursor.getColumnIndex("uuid"));
             this.username=username;
             this.learnPlan=new LearnPlan(cursor.getInt(cursor.getColumnIndex("LearnPlanId")));
-            this.wrongCollection=new WrongCollection(cursor.getInt(cursor.getColumnIndex("WrongCollectionId")));
-            this.diffCollection=new DiffCollection(cursor.getInt(cursor.getColumnIndex("DiffCollectionID")));
+            this.wrongCollection=new WrongCollection(AppContext,cursor.getInt(cursor.getColumnIndex("WrongCollectionId")));
+            this.diffCollection=new DiffCollection(AppContext,cursor.getInt(cursor.getColumnIndex("DiffCollectionID")));
             this.phoneNum=cursor.getString(cursor.getColumnIndex("phoneNum"));
             this.email=cursor.getString(cursor.getColumnIndex("email"));
             this.preference=new Preference(cursor.getInt(cursor.getColumnIndex("preferenceId")));
@@ -174,5 +174,10 @@ public  class  User {
     public void setHeadImage(String headImage) {
         RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,String.valueOf(uuid),new String[]{"headImage"},new String[]{headImage});
         this.headImage = headImage;
+    }
+
+    public void changePassword(String password){
+        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,String.valueOf(uuid),new String[]{"password"},new String[]{password});
+
     }
 }

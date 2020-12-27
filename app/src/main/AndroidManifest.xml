@@ -56,8 +56,27 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
+        <!--        个人设置窗口-->
+        <activity android:name=".MainView.Personal.utilsActivity.PreferenceActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.PreferenceActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--        学习设置窗口-->
+        <activity android:name=".MainView.Personal.utilsActivity.LearnOptionActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.LearnOptionActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--        学习计划窗口-->
+        <activity android:name=".MainView.Personal.utilsActivity.LearnPlanActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.LearnPlanActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
 
     </application>

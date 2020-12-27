@@ -5,49 +5,45 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.R;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
-public class PreferenceActivity extends Activity {
+public class LearnOptionActivity extends Activity {
     private static final float TEXTSIZE = 20.0f;
     private static final int ITEMHEIGHT = 150;
     private static final int SELECT_NOACITION = -1;
-    private final int SELECT_USERNAME=0;
-    private final int SELECT_NICKNAME=1;
-    private final int SELECT_PASSWORD=2;
-    private final int SELECT_EMAIL=3;
-    private final int SELECT_PHONE=4;
+    private final int SELECT_STUDYMODE=0;
+    private final int SELECT_STUDYINORDER=1;
+    private final int SELECT_PRONUNCIATION=2;
+    private final int SELECT_AUTOPLAY=3;
 
     private QMUIGroupListView mGroupListView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preference);
+        setContentView(R.layout.activity_learnoption);
         //开始初始化界面
         initViews();
     }
 
     private void initViews() {
-        mGroupListView = (QMUIGroupListView) findViewById(R.id.list_preference);
+        mGroupListView = (QMUIGroupListView) findViewById(R.id.list_learnoptions);
 
         initListItems();
     }
 
     private void initListItems() {
-        //TODO:个人设置
-        QMUICommonListItemView item_uuid = makeListItem("UUID","",SELECT_USERNAME);
+        //TODO:学习设置
+        QMUICommonListItemView item_StuduModel =  makeListItem("学习模式：","", SELECT_STUDYMODE);
 
-        QMUICommonListItemView item_nickname =makeListItem("昵称","", SELECT_NICKNAME);
+        QMUICommonListItemView item_StudyInOrder =  makeListItem("学习顺序","", SELECT_STUDYINORDER);
 
-        QMUICommonListItemView item_password = makeListItem("修改密码","", SELECT_PASSWORD);
+        QMUICommonListItemView item_Pronunciation =  makeListItem("当前发音：","", SELECT_PRONUNCIATION);
 
-        QMUICommonListItemView item_email = makeListItem("邮箱","", SELECT_EMAIL);
-
-        QMUICommonListItemView item_pohone = makeListItem("手机号","", SELECT_PHONE);
+        QMUICommonListItemView item_AutoPlay =  makeListItem("自动发音","", SELECT_AUTOPLAY);
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -56,28 +52,25 @@ public class PreferenceActivity extends Activity {
                 int selectId=(int)v.getTag();
                 System.out.println(selectId);
                 switch (selectId){
-                    case SELECT_USERNAME:
+                    case SELECT_STUDYMODE:
                         break;
-                    case SELECT_NICKNAME:
+                    case SELECT_STUDYINORDER:
                         break;
-                    case SELECT_PASSWORD:
+                    case SELECT_PRONUNCIATION:
                         break;
-                    case SELECT_PHONE:
-                        break;
-                    case SELECT_EMAIL:
+                    case SELECT_AUTOPLAY:
                         break;
                 }
             }
         };//默认文字在左边   自定义加载框按钮
 
         QMUIGroupListView.newSection(getBaseContext())
-                .setTitle("个人设置")
+                .setTitle("学习设置")
                 .setDescription("")
-                .addItemView(item_uuid, onClickListener)
-                .addItemView(item_nickname, onClickListener)
-                .addItemView(item_password, onClickListener)
-                .addItemView(item_email, onClickListener)
-                .addItemView(item_pohone, onClickListener)
+                .addItemView(item_StuduModel, onClickListener)
+                .addItemView(item_StudyInOrder, onClickListener)
+                .addItemView(item_Pronunciation, onClickListener)
+                .addItemView(item_AutoPlay, onClickListener)
                 .addTo(mGroupListView);
     }
 
