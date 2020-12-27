@@ -56,7 +56,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".MainView.LearnWords.WordsRemember">
+            <intent-filter>
+                <action android:name="android.intent.action.WordsRemember" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
 
 
