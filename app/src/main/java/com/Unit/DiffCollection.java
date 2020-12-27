@@ -9,7 +9,6 @@ import com.dao.RemotoDatabase;
 import java.util.ArrayList;
 
 public class DiffCollection extends  Collection{
-    private  final String TABLE_NAME ="DiffCollection";
 
     private final int INIT_SUCCESS=0;
     private final int INITE_FAIL=1;
@@ -17,7 +16,7 @@ public class DiffCollection extends  Collection{
     public int initCollection() {
         RemotoDatabase remotoDatabase=RemotoDatabase.getInstance(getAppContext());
         SQLiteDatabase sqliteDatabase = remotoDatabase.getReadableDatabase();
-        Cursor cursor = sqliteDatabase.query(TABLE_NAME,
+        Cursor cursor = sqliteDatabase.query(getTABLENAME(),
                 new String[]{"CollectionVersion","uuid","word"},
                 "CollectionVersion=?",
                 new String[]{String.valueOf(getCollectionVersion())},
@@ -28,24 +27,22 @@ public class DiffCollection extends  Collection{
             }
 
         }else{
+            sqliteDatabase.close();
             return INITE_FAIL;
         }
         return INIT_SUCCESS;
     }
 
     @Override
-    public int flushCollection(User user) {
-        return 0;
-    }
-
-
-    @Override
-    public int delWord(String word) {
-        return 0;
+    public int flushCollection() {
+        super.flushCollection();
+        return initCollection();
     }
 
 
     public DiffCollection(Context AppContext,int collectionId){
+        setTABLE_COLUMN_ID("CollectionVersion");
+        setTABLENAME("DiffCollection");
         setCollectionVersion(collectionId);
         setAppContext(AppContext);
         initCollection();
