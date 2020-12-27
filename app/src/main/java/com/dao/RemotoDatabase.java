@@ -28,6 +28,7 @@ public class RemotoDatabase extends SQLiteOpenHelper {
         //创建数据库
         super(context, DB_NAME, null, 2);
         this.context = context;
+
     }
 
     @Override
