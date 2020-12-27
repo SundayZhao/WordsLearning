@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.R;
+import com.Unit.User;
 
 public class LoginActivity  extends AppCompatActivity {
     private Button btn_log; //登录按钮
@@ -33,7 +34,7 @@ public class LoginActivity  extends AppCompatActivity {
             public void onClick(View v) {
                 String username = edt_username.getText().toString().trim();        //获取用户名
                 String password = edt_password.getText().toString().trim();        //获取密码
-
+                User.getInstance(getApplicationContext()).logIn(username,password);
                 Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
             }
         });

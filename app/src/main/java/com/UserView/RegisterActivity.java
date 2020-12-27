@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.R;
+import com.Unit.User;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -34,22 +35,21 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = mEdt_regUsername.getText().toString().trim();         //获取用户名
                 String email = mEdt_regEmail.getText().toString().trim();                //获取邮箱
-                String phone = mEdt_regPhone.getText().toString().trim();               //获取电话
+                String phonenum = mEdt_regPhone.getText().toString().trim();               //获取电话
                 String password = mEdt_regPassWord.getText().toString().trim();         //获取注册密码
                 String passwordcf = mEdt_regPassWordCf.getText().toString().trim();       //获取密码确认
                 String nikename = mEdt_regNikeName.getText().toString().trim();           //获取昵称
-
                 //对比已有账号，是否是新账号，否则注册新账号并提示“注册成功，返回登录界面”
-            if(!password.equals(passwordcf)){
-                Toast.makeText(RegisterActivity.this,"两次密码输入不一致",LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(RegisterActivity.this, "注册成功，返回登录界面", LENGTH_SHORT).show();
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
-                //注册成功则返回提示框“注册成功”，否则返回账号名已存在
-            }
-
+                if(!password.equals(passwordcf)){
+                    Toast.makeText(RegisterActivity.this,"两次密码输入不一致",LENGTH_SHORT).show();
+                }
+                else {
+                    User.getInstance(getApplicationContext()).registe(username,password,nikename,email,phonenum);
+                    Toast.makeText(RegisterActivity.this, "注册成功，返回登录界面", LENGTH_SHORT).show();
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    //注册成功则返回提示框“注册成功”，否则返回账号名已存在
+                }
             }
         });
 
