@@ -16,6 +16,9 @@ public class GridListCallBack {
     public static final int STATE_ABOUT_US=4;
     public static final int STATE_FAVORATE=5;
     public static final int STATE_USER_AGREEMENT=6;
+    public static final int STATE_PREFERENCE=7;
+    public static final int STATE_LEARNOPTIONS=8;
+    public static final int STATE_LEARNPLANS = 9;
 
     private Context context=null;
     public GridListCallBack(Context context){
@@ -59,6 +62,21 @@ public class GridListCallBack {
                 break;
             case STATE_USER_AGREEMENT:
                 intent.setAction("android.intent.action.UserAgreementActivity");
+                intent.addCategory("android.intent.category.DEFAULT");
+                context.startActivity(intent);
+                break;
+            case STATE_PREFERENCE:
+                intent.setAction("android.intent.action.PreferenceActivity");
+                intent.addCategory("android.intent.category.DEFAULT");
+                context.startActivity(intent);
+                break;
+            case STATE_LEARNOPTIONS:
+                intent.setAction("android.intent.action.LearnOptionActivity");
+                intent.addCategory("android.intent.category.DEFAULT");
+                context.startActivity(intent);
+                break;
+            case STATE_LEARNPLANS:
+                intent.setAction("android.intent.action.LearnPlanActivity");
                 intent.addCategory("android.intent.category.DEFAULT");
                 context.startActivity(intent);
                 break;
