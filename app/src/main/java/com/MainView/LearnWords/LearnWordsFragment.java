@@ -92,7 +92,7 @@ public class LearnWordsFragment extends Fragment {
             }
         });
 
-        LearnPlan learnPlan = user.getLearnPlan();
+//        LearnPlan learnPlan = user.getLearnPlan();
 //        ArrayList<DateData> finished_dates = learnPlan.getFinished_dates();
 //        for(int i=0;i<finished_dates.size();i++) {
 //            calendarView.markDate(finished_dates.get(i).getYear(),finished_dates.get(i).getMonth(),finished_dates.get(i).getDay());
