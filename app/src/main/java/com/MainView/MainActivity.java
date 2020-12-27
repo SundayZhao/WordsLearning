@@ -35,6 +35,8 @@ import com.qmuiteam.qmui.widget.tab.QMUITabSegment;
 
 import java.util.ArrayList;
 
+import pl.com.salsoft.sqlitestudioremote.SQLiteStudioService;
+
 public class MainActivity extends AppCompatActivity {
 
     //界面的组件
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SQLiteStudioService.instance().start(this);
         //开始初始化界面
         initViews();
     }

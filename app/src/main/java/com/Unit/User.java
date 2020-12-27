@@ -202,4 +202,24 @@ public  class  User {
         RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,TABLE_COLUMN_ID,String.valueOf(uuid),new String[]{"password"},new String[]{password});
 
     }
+
+    public LearnPlan getLearnPlan() {
+        return learnPlan;
+    }
+
+
+    public WrongCollection getWrongCollection() {
+        return wrongCollection;
+    }
+
+
+    public DiffCollection getDiffCollection() {
+        return diffCollection;
+    }
+
+
+    public Preference getPreference() {
+        return preference;
+    }
+
 }

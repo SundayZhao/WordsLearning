@@ -14,6 +14,7 @@ public class DiffCollection extends  Collection{
     private final int INITE_FAIL=1;
     @Override
     public int initCollection() {
+        if(getCollectionVersion()==0) return INITE_FAIL;
         RemotoDatabase remotoDatabase=RemotoDatabase.getInstance(getAppContext());
         SQLiteDatabase sqliteDatabase = remotoDatabase.getReadableDatabase();
         Cursor cursor = sqliteDatabase.query(getTABLENAME(),

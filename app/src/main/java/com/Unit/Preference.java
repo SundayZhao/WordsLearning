@@ -42,6 +42,7 @@ public class Preference {
 
     //这个函数是用来登录后初始化个人配置的
     private int initPreference() {
+        if(preferenceId==0) return INITE_FAIL;
         RemotoDatabase remotoDatabase=RemotoDatabase.getInstance(appContext);
         SQLiteDatabase sqliteDatabase = remotoDatabase.getReadableDatabase();
         Cursor cursor = sqliteDatabase.query(TABLE_NAME,

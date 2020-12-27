@@ -1,5 +1,7 @@
 package com.Unit;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 /*
@@ -13,4 +15,8 @@ public class WordBook {
     private  String bookName=null;
     //单词列表，一定不要获取整个单词书的列表，但是现在是本地操作，无所谓了
     private ArrayList<Word> words=null;
+
+    public WordBook(Context context,String id){
+
+    }
 }
