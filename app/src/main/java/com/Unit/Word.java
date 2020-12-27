@@ -19,7 +19,8 @@ public class Word {
         return English;
     }
 
-    public void setEnglish(String english) {
-        English = english;
+    public void setEnglish(String english)
+    {
+        this.English = english;
     }
 }
