@@ -30,6 +30,7 @@ public class DiffCollection extends  Collection{
             sqliteDatabase.close();
             return INITE_FAIL;
         }
+        sqliteDatabase.close();
         return INIT_SUCCESS;
     }
 
@@ -45,6 +46,6 @@ public class DiffCollection extends  Collection{
         setTABLENAME("DiffCollection");
         setCollectionVersion(collectionId);
         setAppContext(AppContext);
-        initCollection();
+        //initCollection();
     }
 }

@@ -1,5 +1,6 @@
 package com.Unit;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,6 +16,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class LearnPlan {
+    public  static final int NO_PLAN=0;
     private static final int INITE_FAIL = 0;
     private static final int INIT_SUCCESS = 1;
     private Context appContext;
@@ -46,7 +48,7 @@ public class LearnPlan {
         initLearnPlan();
     }
     private int initLearnPlan(){
-        if(LearnPlanId==0)return INITE_FAIL;
+        if(LearnPlanId==NO_PLAN)return INITE_FAIL;
         else{
             //TODO:从sqlite里面拿到learnplan
             RemotoDatabase remotoDatabase=RemotoDatabase.getInstance(appContext);
@@ -146,5 +148,23 @@ public class LearnPlan {
                         new String[]{StringUtils.join(last_Signin,"||")});
 
         return 0;
+    }
+
+    public static  void createNewPlan(Context appContext,int planId){
+        ContentValues contentValues=new ContentValues();
+        //new String[]{"LearnPlanId","createTime","wordBookId","hasLearned","weChartOrderId","last_Signin"},
+        contentValues.put("LearnPlanId",planId);
+        contentValues.put("createTime", "");
+        contentValues.put("wordBookId",NO_PLAN);
+        contentValues.put("weChartOrderId","");
+        contentValues.put("last_Signin","");
+        RemotoDatabase.getInstance(appContext).addSqllite(TABLE_NAME,contentValues);
+    }
+
+    public boolean is_noPlan(){
+        if (createTime==null ||createTime==""){
+          return true;
+        }
+        else return true;
     }
 }
