@@ -18,6 +18,7 @@ import java.util.UUID;
  */
 public  class  User {
     private final String TABLE_NAME="user";
+    private final String TABLE_COLUMN_ID="uuid";
     public static  final int LOG_LOGIN_FAIL=0;
     public static  final int LOG_LOGIN_SUCCESS=1;
 
@@ -82,12 +83,12 @@ public  class  User {
             this.nickName=cursor.getString(cursor.getColumnIndex("nickname"));
             this.uuid=cursor.getInt(cursor.getColumnIndex("uuid"));
             this.username=username;
-            this.learnPlan=new LearnPlan(cursor.getInt(cursor.getColumnIndex("LearnPlanId")));
-            this.wrongCollection=new WrongCollection(cursor.getInt(cursor.getColumnIndex("WrongCollectionId")));
-            this.diffCollection=new DiffCollection(cursor.getInt(cursor.getColumnIndex("DiffCollectionID")));
+            this.learnPlan=new LearnPlan(AppContext,cursor.getInt(cursor.getColumnIndex("LearnPlanId")));
+            this.wrongCollection=new WrongCollection(AppContext,cursor.getInt(cursor.getColumnIndex("WrongCollectionId")));
+            this.diffCollection=new DiffCollection(AppContext,cursor.getInt(cursor.getColumnIndex("DiffCollectionID")));
             this.phoneNum=cursor.getString(cursor.getColumnIndex("phoneNum"));
             this.email=cursor.getString(cursor.getColumnIndex("email"));
-            this.preference=new Preference(cursor.getInt(cursor.getColumnIndex("preferenceId")));
+            this.preference=new Preference(AppContext,cursor.getInt(cursor.getColumnIndex("preferenceId")));
             this.headImage=cursor.getString(cursor.getColumnIndex("headImage"));
             this.isLog=true;
             return LOG_LOGIN_SUCCESS;
@@ -107,11 +108,32 @@ public  class  User {
         this.uuid= UUID.randomUUID().hashCode();
         this.email=email;
         this.phoneNum=phoneNum;
+
+        ContentValues contentValues=new ContentValues();
         //TODO:默认的生词本
-        //TODO:默认的错词本
-        //TODO:默认的配置
-        //TODO:无计划，但是先生成一行
-        //TODO:头像也默认
+        contentValues.put("uuid",this.uuid);
+        contentValues.put("nickname",this.nickName);
+
+        int newLearnPlanId=UUID.randomUUID().hashCode();
+        contentValues.put("LearnPlanId",newLearnPlanId);
+        LearnPlan.createNewPlan(AppContext,newLearnPlanId);
+
+        int newDiffCollection=UUID.randomUUID().hashCode();
+        contentValues.put("DiffCollectionID",newDiffCollection);
+
+        int newWrongCollection=UUID.randomUUID().hashCode();
+        contentValues.put("WrongCollectionId",newWrongCollection);
+
+        contentValues.put("phoneNum",this.phoneNum);
+        contentValues.put("email",this.email);
+
+        int newPreferenceId=UUID.randomUUID().hashCode();
+        contentValues.put("preferenceId",newPreferenceId);
+        Preference.createNewPreference(AppContext,newPreferenceId);
+
+        contentValues.put("headImage","normal.png");
+
+        RemotoDatabase.getInstance(AppContext).addSqllite(TABLE_NAME,contentValues);
     }
 
     public String getToken() {
@@ -127,7 +149,7 @@ public  class  User {
     }
 
     public void setNickName(String nickName) {
-        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,String.valueOf(uuid),new String[]{"nickName"},new String[]{nickName});
+        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,TABLE_COLUMN_ID,String.valueOf(uuid),new String[]{"nickName"},new String[]{nickName});
         this.nickName = nickName;
     }
 
@@ -144,7 +166,7 @@ public  class  User {
     }
 
     public void setPhoneNum(String phoneNum) {
-        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,String.valueOf(uuid),new String[]{"phoneNum"},new String[]{phoneNum});
+        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,TABLE_COLUMN_ID,String.valueOf(uuid),new String[]{"phoneNum"},new String[]{phoneNum});
         this.phoneNum = phoneNum;
     }
 
@@ -153,7 +175,7 @@ public  class  User {
     }
 
     public void setEmail(String email) {
-        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,String.valueOf(uuid),new String[]{"email"},new String[]{email});
+        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,TABLE_COLUMN_ID,String.valueOf(uuid),new String[]{"email"},new String[]{email});
         this.email = email;
     }
 
@@ -172,7 +194,12 @@ public  class  User {
     }
 
     public void setHeadImage(String headImage) {
-        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,String.valueOf(uuid),new String[]{"headImage"},new String[]{headImage});
+        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,TABLE_COLUMN_ID,String.valueOf(uuid),new String[]{"headImage"},new String[]{headImage});
         this.headImage = headImage;
+    }
+
+    public void changePassword(String password){
+        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,TABLE_COLUMN_ID,String.valueOf(uuid),new String[]{"password"},new String[]{password});
+
     }
 }

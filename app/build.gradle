@@ -42,4 +42,12 @@ dependencies {
     implementation 'com.github.wildma:PictureSelector:2.1.0'
     //折线图
     implementation 'com.github.lecho:hellocharts-android:v1.5.8'
+    //原型进度条
+    implementation 'me.itangqi.waveloadingview:library:0.3.5'
+    //滚动选择器
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
+
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+
 }

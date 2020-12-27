@@ -10,4 +10,17 @@ public class Word {
     private int wrongTimes=0;
     private int rememberTimes=0;
     private boolean is_new=true;
+
+    public Word(String Englis){
+        this.English=English;
+    }
+
+    public String getEnglish() {
+        return English;
+    }
+
+    public void setEnglish(String english)
+    {
+        this.English = english;
+    }
 }

@@ -1,46 +1,51 @@
 package com.Unit;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.dao.RemotoDatabase;
+
 import java.util.ArrayList;
 
 public class DiffCollection extends  Collection{
-    private  int collectionId=0;
+
+    private final int INIT_SUCCESS=0;
+    private final int INITE_FAIL=1;
     @Override
     public int initCollection() {
-        return 0;
+        RemotoDatabase remotoDatabase=RemotoDatabase.getInstance(getAppContext());
+        SQLiteDatabase sqliteDatabase = remotoDatabase.getReadableDatabase();
+        Cursor cursor = sqliteDatabase.query(getTABLENAME(),
+                new String[]{"CollectionVersion","uuid","word"},
+                "CollectionVersion=?",
+                new String[]{String.valueOf(getCollectionVersion())},
+                null,null,null);
+        if(cursor.getColumnCount()!=0){
+            while (cursor.moveToNext()) {
+                addWord(new Word(cursor.getString(cursor.getColumnIndex("word"))));
+            }
+
+        }else{
+            sqliteDatabase.close();
+            return INITE_FAIL;
+        }
+        sqliteDatabase.close();
+        return INIT_SUCCESS;
     }
 
     @Override
-    public int flushCollection(User user) {
-        return 0;
+    public int flushCollection() {
+        super.flushCollection();
+        return initCollection();
     }
 
-    @Override
-    public ArrayList<Word> getCollectionList(int startSit, int offSit) {
-        return null;
-    }
 
-    @Override
-    public int delWord(String word) {
-        return 0;
-    }
-
-    @Override
-    public int delWords(ArrayList<String> words) {
-        return 0;
-    }
-
-    @Override
-    public int addWord(String word) {
-        return 0;
-    }
-
-    @Override
-    public int addWords(ArrayList<String> words) {
-        return 0;
-    }
-
-    public DiffCollection(int collectionId){
-        this.collectionId=collectionId;
-        initCollection();
+    public DiffCollection(Context AppContext,int collectionId){
+        setTABLE_COLUMN_ID("CollectionVersion");
+        setTABLENAME("DiffCollection");
+        setCollectionVersion(collectionId);
+        setAppContext(AppContext);
+        //initCollection();
     }
 }
