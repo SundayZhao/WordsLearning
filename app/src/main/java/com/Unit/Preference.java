@@ -1,5 +1,6 @@
 package com.Unit;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -123,5 +124,16 @@ public class Preference {
                         new String[]{String.valueOf(autoPlay)});
 
         this.autoPlay = autoPlay;
+    }
+
+    public static void createNewPreference(Context appContext,int id){
+        ContentValues contentValues=new ContentValues();
+        //"preferenceId","studyMode","studyInOrder","pronunciation","autoPlay"
+        contentValues.put("preferenceId",id);
+        contentValues.put("studyMode", MODE_SPELL);
+        contentValues.put("studyInOrder",STUDY_ORDER_DISOREDER);
+        contentValues.put("pronunciation",PRONUNCIATION_ENGLISH);
+        contentValues.put("autoPlay",AUTOPLAY_OPEN);
+        RemotoDatabase.getInstance(appContext).addSqllite(TABLE_NAME,contentValues);
     }
 }

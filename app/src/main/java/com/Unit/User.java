@@ -108,11 +108,32 @@ public  class  User {
         this.uuid= UUID.randomUUID().hashCode();
         this.email=email;
         this.phoneNum=phoneNum;
+
+        ContentValues contentValues=new ContentValues();
         //TODO:默认的生词本
-        //TODO:默认的错词本
-        //TODO:默认的配置
-        //TODO:无计划，但是先生成一行
-        //TODO:头像也默认
+        contentValues.put("uuid",this.uuid);
+        contentValues.put("nickname",this.nickName);
+
+        int newLearnPlanId=UUID.randomUUID().hashCode();
+        contentValues.put("LearnPlanId",newLearnPlanId);
+        LearnPlan.createNewPlan(AppContext,newLearnPlanId);
+
+        int newDiffCollection=UUID.randomUUID().hashCode();
+        contentValues.put("DiffCollectionID",newDiffCollection);
+
+        int newWrongCollection=UUID.randomUUID().hashCode();
+        contentValues.put("WrongCollectionId",newWrongCollection);
+
+        contentValues.put("phoneNum",this.phoneNum);
+        contentValues.put("email",this.email);
+
+        int newPreferenceId=UUID.randomUUID().hashCode();
+        contentValues.put("preferenceId",newPreferenceId);
+        Preference.createNewPreference(AppContext,newPreferenceId);
+
+        contentValues.put("headImage","normal.png");
+
+        RemotoDatabase.getInstance(AppContext).addSqllite(TABLE_NAME,contentValues);
     }
 
     public String getToken() {

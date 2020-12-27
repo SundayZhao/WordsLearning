@@ -27,8 +27,10 @@ public class WrongCollection extends Collection{
             }
 
         }else{
+            sqliteDatabase.close();
             return INITE_FAIL;
         }
+        sqliteDatabase.close();
         return INIT_SUCCESS;
     }
 
@@ -50,6 +52,6 @@ public class WrongCollection extends Collection{
         setTABLENAME("DiffCollection");
         setCollectionVersion(collectionId);
         setAppContext(AppContext);
-        initCollection();
+        //initCollection();
     }
 }
