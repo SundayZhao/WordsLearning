@@ -11,6 +11,7 @@ import com.dao.RemotoDatabase;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.UUID;
 
 /*
@@ -22,6 +23,7 @@ public  class  User {
     public static  final int LOG_LOGIN_FAIL=0;
     public static  final int LOG_LOGIN_SUCCESS=1;
 
+    public static final String HEAD_IMAGE_NONE="normal.png";
     //必须是appcontext，不是basecontext
     private Context AppContext=null;
 
@@ -105,7 +107,7 @@ public  class  User {
     public void registe(String username,String password,String nickName,String email,String phoneNum){
         this.username=username;
         this.nickName=nickName;
-        this.uuid= UUID.randomUUID().hashCode();
+        this.uuid=Math.abs(UUID.randomUUID().hashCode());
         this.email=email;
         this.phoneNum=phoneNum;
 
@@ -114,25 +116,26 @@ public  class  User {
         contentValues.put("uuid",this.uuid);
         contentValues.put("nickname",this.nickName);
 
-        int newLearnPlanId=UUID.randomUUID().hashCode();
+        int newLearnPlanId=Math.abs(UUID.randomUUID().hashCode());
         contentValues.put("LearnPlanId",newLearnPlanId);
         LearnPlan.createNewPlan(AppContext,newLearnPlanId);
 
-        int newDiffCollection=UUID.randomUUID().hashCode();
+        int newDiffCollection=Math.abs(UUID.randomUUID().hashCode());
         contentValues.put("DiffCollectionID",newDiffCollection);
 
-        int newWrongCollection=UUID.randomUUID().hashCode();
+        int newWrongCollection=Math.abs(UUID.randomUUID().hashCode());
         contentValues.put("WrongCollectionId",newWrongCollection);
 
         contentValues.put("phoneNum",this.phoneNum);
         contentValues.put("email",this.email);
 
-        int newPreferenceId=UUID.randomUUID().hashCode();
+        int newPreferenceId=Math.abs(UUID.randomUUID().hashCode());
         contentValues.put("preferenceId",newPreferenceId);
         Preference.createNewPreference(AppContext,newPreferenceId);
 
-        contentValues.put("headImage","normal.png");
-
+        contentValues.put("headImage",HEAD_IMAGE_NONE);
+        contentValues.put("password",password);
+        contentValues.put("username",this.username);
         RemotoDatabase.getInstance(AppContext).addSqllite(TABLE_NAME,contentValues);
     }
 
@@ -182,15 +185,24 @@ public  class  User {
 
     public Bitmap getHeadImage() {
         FileInputStream fs = null;
+        Bitmap bitmap=null;
         try {
-            fs = new FileInputStream(this.headImage);
-            Bitmap bitmap  = BitmapFactory.decodeStream(fs);
+            if(this.headImage.equals(HEAD_IMAGE_NONE)){
+                //没有头像，读取默认的
+                bitmap = BitmapFactory.decodeStream(  AppContext.getAssets().open(HEAD_IMAGE_NONE));
+            }else {
+                fs = new FileInputStream(this.headImage);
+                bitmap = BitmapFactory.decodeStream(fs);
+            }
+
             return bitmap;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
-
     }
 
     public void setHeadImage(String headImage) {
@@ -202,6 +214,7 @@ public  class  User {
         RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,TABLE_COLUMN_ID,String.valueOf(uuid),new String[]{"password"},new String[]{password});
 
     }
+
 
     public LearnPlan getLearnPlan() {
         return learnPlan;

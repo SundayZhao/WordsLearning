@@ -39,7 +39,7 @@ public class LearnWordsFragment extends Fragment {
     private TextView textView =null;
     private MCalendarView calendarView = null;
     private Button button = null;
-    private User user= User.getInstance(getContext());
+    private User user= null;
 
     public LearnWordsFragment(){
         // Required empty public constructor
@@ -81,6 +81,7 @@ public class LearnWordsFragment extends Fragment {
         textView =(TextView)view.findViewById(R.id.textView);
         calendarView = (MCalendarView) view.findViewById(R.id.mCalendarView);
         button = (Button) view.findViewById(R.id.button1);
+        user=User.getInstance(getContext());
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

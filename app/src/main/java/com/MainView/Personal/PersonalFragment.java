@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,8 +18,12 @@ import com.MainView.MainActivity;
 import com.R;
 import com.Unit.DiffCollection;
 import com.Unit.User;
+import com.Unit.Word;
+import com.UserView.LoginActivity;
+import com.dao.RemotoDatabase;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 import com.wildma.pictureselector.PictureBean;
 import com.wildma.pictureselector.PictureSelector;
 
@@ -38,6 +43,8 @@ public class PersonalFragment extends Fragment {
     private QMUIRadiusImageView profilePhotoView = null;//圆形头像框
     private QMUIBottomSheet.BottomListSheetBuilder profilePhotoSelectorBuilder = null;//下面弹出那个选择头像的dialog
     private GridView utilsGridView=null;//功能菜单
+    private TextView nameView=null;//名字的文本框
+    private QMUIPullRefreshLayout qmuiPullRefreshLayout=null;//下拉刷新
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,19 +81,54 @@ public class PersonalFragment extends Fragment {
      * @param view
      */
     protected void initView(View view) {
+        RemotoDatabase.getInstance(getContext());
         profilePhotoView = (QMUIRadiusImageView) view.findViewById(R.id.personalProfilePhoto);
         profilePhotoSelectorBuilder = new QMUIBottomSheet.BottomListSheetBuilder(getActivity());
         utilsGridView=(GridView)view.findViewById(R.id.personal_gridview);
+        nameView=(TextView)view.findViewById(R.id.textview_pesrsonal_nickname);
+        qmuiPullRefreshLayout=(QMUIPullRefreshLayout)view.findViewById(R.id.refreshlayout_personal);
         //初始化头像框相关的东西
         initprofilePhotoView();
         //初始化下方的列表
         initutilsGridView();
+        //初始化下拉刷新
+        initFreshlayout();
+    }
+
+    private void initFreshlayout() {
+        qmuiPullRefreshLayout.setOnPullListener(new QMUIPullRefreshLayout.OnPullListener() {
+            @Override
+            public void onMoveTarget(int offset) {
+
+            }
+
+            @Override
+            public void onMoveRefreshView(int offset) {
+
+            }
+
+            @Override
+            public void onRefresh() {
+                qmuiPullRefreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //TODO:下拉刷新事件
+                        User.getInstance(getContext()).logIn("zhanghao","123456");
+//                        User.getInstance(getContext()).getWrongCollection().addWord(new Word("good"));
+//                        User.getInstance(getContext()).getWrongCollection().addWord(new Word("well"));
+//                        User.getInstance(getContext()).getWrongCollection().addWord(new Word("nice"));
+                        initprofilePhotoView();
+                        qmuiPullRefreshLayout.finishRefresh();
+                    }
+                }, 2000);
+            }
+        });
     }
 
     private void initutilsGridView() {
         ArrayList<GridListItem> gridListItems=new ArrayList<GridListItem>( 3);
-        gridListItems.add(new GridListItem("错词本",GridListCallBack.STATE_DIFF_COLLECTION,R.drawable.wrongcollectionnormal,R.drawable.wrongcollectionselected));
-        gridListItems.add(new GridListItem("生词本",GridListCallBack.STATE_WRONG_COLLECTION,R.drawable.diffcollectionnormal,R.drawable.diffcollectionselected));
+        gridListItems.add(new GridListItem("错词本",GridListCallBack.STATE_WRONG_COLLECTION,R.drawable.wrongcollectionnormal,R.drawable.wrongcollectionselected));
+        gridListItems.add(new GridListItem("生词本",GridListCallBack.STATE_DIFF_COLLECTION,R.drawable.diffcollectionnormal,R.drawable.diffcollectionselected));
         gridListItems.add(new GridListItem("学习计划",GridListCallBack.STATE_LEARNPLANS,R.drawable.learnplannormal,R.drawable.learnplanselected));
         gridListItems.add(new GridListItem("学习设置",GridListCallBack.STATE_LEARNOPTIONS,R.drawable.optionsnormal,R.drawable.optionsselected));
         gridListItems.add(new GridListItem("学习数据",GridListCallBack.STATE_LEARN_DATA,R.drawable.learndatanormal,R.drawable.learndataselected));
@@ -104,6 +146,14 @@ public class PersonalFragment extends Fragment {
 
 
     private void initprofilePhotoView() {
+        if(User.getInstance(getContext()).isLogged()){
+            nameView.setText(User.getInstance(getContext()).getNickName());
+            profilePhotoView.setImageBitmap(User.getInstance(getContext()).getHeadImage());
+        }
+        else{
+            nameView.setText("点击头像登录");
+        }
+
         profilePhotoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +165,8 @@ public class PersonalFragment extends Fragment {
                             .selectPicture(false);
                 }else{
                     //TODO:打开登录界面
+                    Intent intent=new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
                 }
 
             }
@@ -130,8 +182,10 @@ public class PersonalFragment extends Fragment {
                 PictureBean pictureBean = data.getParcelableExtra(PictureSelector.PICTURE_RESULT);
                 if (pictureBean.isCut()) {
                     profilePhotoView.setImageBitmap(BitmapFactory.decodeFile(pictureBean.getPath()));
+                    User.getInstance(getContext()).setHeadImage(pictureBean.getPath());
                 } else {
                     profilePhotoView.setImageURI(pictureBean.getUri());
+                    User.getInstance(getContext()).setHeadImage(pictureBean.getUri().getPath());
                 }
 
                 //使用 Glide 加载图片

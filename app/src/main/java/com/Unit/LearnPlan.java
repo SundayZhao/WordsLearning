@@ -41,6 +41,9 @@ public class LearnPlan {
     //已经打卡的日期
     private ArrayList<String> last_Signin=null;
 
+    //学习记录
+    private ArrayList<String> study_log=null;
+
 
     public LearnPlan(Context appContext,int LearnPlanId){
         this.appContext=appContext;
@@ -54,7 +57,7 @@ public class LearnPlan {
             RemotoDatabase remotoDatabase=RemotoDatabase.getInstance(appContext);
             SQLiteDatabase sqliteDatabase = remotoDatabase.getReadableDatabase();
             Cursor cursor = sqliteDatabase.query(TABLE_NAME,
-                    new String[]{"LearnPlanId","createTime","wordBookId","hasLearned","weChartOrderId","last_Signin"},
+                    new String[]{"LearnPlanId","createTime","wordBookId","hasLearned","weChartOrderId","last_Signin","studylog"},
                     TABLE_PRIMARY_KEY+"=?",
                     new String[]{String.valueOf(LearnPlanId)},
                     null,null,null);
@@ -67,6 +70,10 @@ public class LearnPlan {
 
                 String[]checkInDates=cursor.getString(cursor.getColumnIndex("last_Signin")).split("||");
                 last_Signin= new ArrayList<String>(Arrays.asList(checkInDates));
+
+                String[]studyLogs=cursor.getString(cursor.getColumnIndex("studylog")).split("||");
+                study_log= new ArrayList<String>(Arrays.asList(studyLogs));
+
             }else{
                 sqliteDatabase.close();
                 return INITE_FAIL;
@@ -135,10 +142,14 @@ public class LearnPlan {
         return last_Signin;
     }
 
+    public ArrayList<String> getStudyLog(){
+        return study_log;
+    }
     //打卡，具体的返回参数之后再说明
-    public int clockIn(Date date){
+    public int clockIn(Date date,int allWords,int correctWords){
         SimpleDateFormat  format= new SimpleDateFormat("yyyy年MM月dd日");
         last_Signin.add(format.format(date));
+        study_log.add(format.format(date)+","+String.valueOf(allWords)+","+String.valueOf(correctWords));
 
         RemotoDatabase.getInstance(appContext).
                 updateSqlite(TABLE_NAME,
@@ -146,6 +157,13 @@ public class LearnPlan {
                         String.valueOf(LearnPlanId),
                         new String[]{"last_Signin"},
                         new String[]{StringUtils.join(last_Signin,"||")});
+
+        RemotoDatabase.getInstance(appContext).
+                updateSqlite(TABLE_NAME,
+                        TABLE_PRIMARY_KEY,
+                        String.valueOf(LearnPlanId),
+                        new String[]{"studylog"},
+                        new String[]{StringUtils.join(study_log,"||")});
 
         return 0;
     }

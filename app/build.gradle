@@ -52,4 +52,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
 
+    //好看的对话框
+    implementation 'com.github.cazaea:sweet-alert-dialog:1.0.0'
+
 }

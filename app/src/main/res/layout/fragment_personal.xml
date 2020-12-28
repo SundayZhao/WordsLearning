@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refreshlayout_personal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/personalbackground">
@@ -39,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
+                android:id="@+id/textview_pesrsonal_nickname"
                 android:text="你的名字"
                 android:textSize="20dp"
                 />

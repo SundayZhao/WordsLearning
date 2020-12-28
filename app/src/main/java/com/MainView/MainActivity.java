@@ -1,16 +1,20 @@
 package com.MainView;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -35,7 +39,7 @@ import com.qmuiteam.qmui.widget.tab.QMUITabSegment;
 
 import java.util.ArrayList;
 
-//import pl.com.salsoft.sqlitestudioremote.SQLiteStudioService;
+import pl.com.salsoft.sqlitestudioremote.SQLiteStudioService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        SQLiteStudioService.instance().start(this);
+       SQLiteStudioService.instance().start(this);
         //开始初始化界面
         initViews();
     }
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.homepage_vp);
         qmuiTabSegment = (QMUITabSegment) findViewById(R.id.tabbar);
         //初始化下方导航和fragments
+
         initTabFragment();
     }
 

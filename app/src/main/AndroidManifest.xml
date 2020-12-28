@@ -5,12 +5,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:authorities="爸爸们"
-        android:theme="@style/Theme.WordsLearning">
+        android:theme="@style/Theme.WordsLearning"
+        android:usesCleartextTraffic="true">
 
         <!--        用户登录窗口-->
         <activity android:name=".UserView.LoginActivity">
@@ -82,6 +82,22 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <!--        学习设置窗口-->
+        <activity android:name=".MainView.Personal.utilsActivity.LearnOptionActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.LearnOptionActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--        学习设置窗口-->
+        <activity android:name=".MainView.Personal.utilsActivity.PreferenceActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.PreferenceActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".MainView.LearnWords.WordsRemember">
             <intent-filter>
                 <action android:name="android.intent.action.WordsRemember" />

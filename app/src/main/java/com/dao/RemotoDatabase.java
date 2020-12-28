@@ -2,6 +2,7 @@ package com.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -17,9 +18,65 @@ public class RemotoDatabase extends SQLiteOpenHelper {
     private static final String DB_NAME = "RemotoDatebase.db";
     private static RemotoDatabase remotoDatabase = null;
 
+
+    private static final String CREATE_DiffCollection="CREATE TABLE DiffCollection" +
+            " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            " CollectionVersion INT (32) , " +
+            "uuid INT (30), " +
+            "word STRING (10));";
+
+    private static final String CREATE_WrongCollection="CREATE TABLE WrongCollection" +
+            " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "CollectionVersion INT , " +
+            "uuid INT, " +
+            "word STRING);";
+
+    private static final String CREATE_LearnPlan="CREATE TABLE LearnPlan " +
+            "(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "createTime STRING, " +
+            "LearnPlanId INT UNIQUE, " +
+            "wordBookId INTEGER, " +
+            "hasLearned INT, " +
+            "weChartOrderId STRING, " +
+            "last_Signin TEXT," +
+            "studylog TEXT );";
+
+    private static final String CREATE_Preference="CREATE TABLE Preference " +
+            "(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "preferenceId INT NOT NULL, " +
+            "studyMode INT, " +
+            "studyInOrder INT, " +
+            "pronunciation INT, " +
+            "autoPlay INT);";
+
+    private static final String CREATE_USER="CREATE TABLE user " +
+            "(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "uuid INT UNIQUE, " +
+            "username STRING, "+
+            "password STRING, "+
+            "nickname STRING, " +
+            "LearnPlanId INT, " +
+            "WrongCollectionId INT, " +
+            "DiffCollectionID INT, " +
+            "phoneNum INT, " +
+            "email STRING, " +
+            "preferenceId INT, " +
+            "headImage STRING);";
+
     public static synchronized RemotoDatabase getInstance(Context context) {
         if (remotoDatabase == null) {
             remotoDatabase = new RemotoDatabase(context);
+            SQLiteDatabase db=remotoDatabase.getWritableDatabase();
+            try {
+                db.execSQL(CREATE_DiffCollection);
+                db.execSQL(CREATE_LearnPlan);
+                db.execSQL(CREATE_Preference);
+                db.execSQL(CREATE_USER);
+                db.execSQL(CREATE_WrongCollection);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+            db.close();
         }
         return remotoDatabase;
     }
@@ -34,6 +91,8 @@ public class RemotoDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //super(context,"RemotoDatebase.db",null,2);
+
+
     }
 
     @Override

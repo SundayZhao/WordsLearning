@@ -7,7 +7,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.R;
+import com.Unit.User;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +50,9 @@ public class LearnDataActivity  extends Activity {
 
     private void initChartItems() {
         //TODO:更新一下标题
-        sumLearnWord.setText("我学过的单词总数:2000");
-        lastUpdate.setText("上次更新日期：2020年12月24日");
+        sumLearnWord.setText("我学过的单词总数:"+ String.valueOf(User.getInstance(getApplicationContext()).getLearnPlan().getHasLearned()));
+        ArrayList<String> clockInList=User.getInstance(getApplicationContext()).getLearnPlan().getClockInDate();
+        lastUpdate.setText("上次更新日期："+clockInList.get(clockInList.size()-1));
         //TODO：获取过去10天的学习单词记录，然后在折线图上面画出来
         //坐标点
         ArrayList<PointValue> mPointValues = new ArrayList<PointValue>();

@@ -11,12 +11,12 @@ public class Word {
     private int rememberTimes=0;
     private boolean is_new=true;
 
-    public Word(String Englis){
+    public Word(String English){
         this.English=English;
     }
 
     public String getEnglish() {
-        return English;
+        return this.English;
     }
 
     public void setEnglish(String english)

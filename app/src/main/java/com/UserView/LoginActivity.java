@@ -34,8 +34,11 @@ public class LoginActivity  extends AppCompatActivity {
             public void onClick(View v) {
                 String username = edt_username.getText().toString().trim();        //获取用户名
                 String password = edt_password.getText().toString().trim();        //获取密码
-                User.getInstance(getApplicationContext()).logIn(username,password);
-                Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
+                if(User.getInstance(getApplicationContext()).logIn(username,password)==User.LOG_LOGIN_SUCCESS) {
+                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(LoginActivity.this, "登录失败，账号密码错误", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -27,6 +27,7 @@ public class WordBook {
 
     public WordBook(Context context, String bookId) {
         this.bookId = Integer.valueOf(bookId);
+        words=new ArrayList<Word>();
 //        InputStream file = null;
 //        try {
 //            file = context.getAssets().open("EnWords.csv");

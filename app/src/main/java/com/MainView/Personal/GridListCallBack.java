@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.MainView.MainActivity;
 import com.MainView.Personal.utilsActivity.DiffCollectionActivity;
+import com.Unit.User;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
@@ -25,9 +26,9 @@ public class GridListCallBack {
         this.context=context;
     }
     public void callbackFunction(int position){
-        if(context==null)return;
+        if(context==null || User.getInstance(context).isLogged()==false)return;
         Intent intent = new Intent();
-        System.out.println(position);
+        //System.out.println(position);
         switch (position){
             case STATE_DIFF_COLLECTION :
                 intent.setAction("android.intent.action.DiffCollectionActivity");

@@ -84,7 +84,7 @@ public class Preference {
         this.studyMode = studyMode;
     }
 
-    public int isStudyInOrder() {
+    public int getStudyInOrder() {
         return studyInOrder;
     }
 
@@ -112,7 +112,7 @@ public class Preference {
         this.pronunciation = pronunciation;
     }
 
-    public int isAutoPlay() {
+    public int getAutoPlay() {
         return autoPlay;
     }
 
