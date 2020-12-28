@@ -35,6 +35,9 @@ public class LearnPlan {
     //学习进度，当前学了多少个单词
     private  int hasLearned = 0;
 
+    //每天学多少个单词
+    private int learndaily=30;
+
     //微信的某种编号，负责退款
     private  String weChartOrderId=null;
 
@@ -57,7 +60,7 @@ public class LearnPlan {
             RemotoDatabase remotoDatabase=RemotoDatabase.getInstance(appContext);
             SQLiteDatabase sqliteDatabase = remotoDatabase.getReadableDatabase();
             Cursor cursor = sqliteDatabase.query(TABLE_NAME,
-                    new String[]{"LearnPlanId","createTime","wordBookId","hasLearned","weChartOrderId","last_Signin","studylog"},
+                    new String[]{"LearnPlanId","createTime","wordBookId","hasLearned","weChartOrderId","last_Signin","studylog","learndaily"},
                     TABLE_PRIMARY_KEY+"=?",
                     new String[]{String.valueOf(LearnPlanId)},
                     null,null,null);
@@ -67,12 +70,24 @@ public class LearnPlan {
                 wordBook=new WordBook(appContext,String.valueOf(cursor.getInt(cursor.getColumnIndex("wordBookId"))));
                 hasLearned=cursor.getInt(cursor.getColumnIndex("hasLearned"));
                 weChartOrderId=cursor.getString(cursor.getColumnIndex("weChartOrderId"));
+                learndaily=(cursor.getInt(cursor.getColumnIndex("learndaily"))==0)?30:cursor.getInt(cursor.getColumnIndex("learndaily"));
 
-                String[]checkInDates=cursor.getString(cursor.getColumnIndex("last_Signin")).split("||");
-                last_Signin= new ArrayList<String>(Arrays.asList(checkInDates));
 
-                String[]studyLogs=cursor.getString(cursor.getColumnIndex("studylog")).split("||");
-                study_log= new ArrayList<String>(Arrays.asList(studyLogs));
+                String temp=cursor.getString(cursor.getColumnIndex("last_Signin"));
+                if(temp.trim().equals("")){
+                    last_Signin = new ArrayList<String>();
+                }else {
+                    String[] checkInDates = cursor.getString(cursor.getColumnIndex("last_Signin")).split("\\|\\|");
+                    last_Signin = new ArrayList<String>(Arrays.asList(checkInDates));
+                }
+
+                temp=cursor.getString(cursor.getColumnIndex("studylog"));
+                if(temp.trim().equals("")){
+                    study_log = new ArrayList<String>();
+                }else {
+                    String[] studyLogs = cursor.getString(cursor.getColumnIndex("studylog")).split("\\|\\|");
+                    study_log = new ArrayList<String>(Arrays.asList(studyLogs));
+                }
 
             }else{
                 sqliteDatabase.close();
@@ -157,14 +172,14 @@ public class LearnPlan {
                         TABLE_PRIMARY_KEY,
                         String.valueOf(LearnPlanId),
                         new String[]{"last_Signin"},
-                        new String[]{StringUtils.join(last_Signin,"||")});
+                        new String[]{(last_Signin.size()==0)?"":StringUtils.join(last_Signin,"||")});
 
         RemotoDatabase.getInstance(appContext).
                 updateSqlite(TABLE_NAME,
                         TABLE_PRIMARY_KEY,
                         String.valueOf(LearnPlanId),
                         new String[]{"studylog"},
-                        new String[]{StringUtils.join(study_log,"||")});
+                        new String[]{(study_log.size()==0)?"":StringUtils.join(study_log,"||")});
 
         return 0;
     }
@@ -178,13 +193,32 @@ public class LearnPlan {
         contentValues.put("weChartOrderId","");
         contentValues.put("last_Signin","");
         contentValues.put("studylog","");
+        contentValues.put("learndaily",0);
         RemotoDatabase.getInstance(appContext).addSqllite(TABLE_NAME,contentValues);
     }
 
+    public void giveupPlan(){
+        setCreateTime("");
+    }
     public boolean is_noPlan(){
         if (createTime==null ||createTime==""){
           return true;
         }
         else return true;
+    }
+
+    public int getLearndaily() {
+        if(is_noPlan()==false)return 0;
+        return learndaily;
+    }
+
+    public void setLearndaily(int learndaily) {
+        this.learndaily = learndaily;
+        RemotoDatabase.getInstance(appContext).
+                updateSqlite(TABLE_NAME,
+                        TABLE_PRIMARY_KEY,
+                        String.valueOf(LearnPlanId),
+                        new String[]{"learndaily"},
+                        new String[]{String.valueOf(learndaily)});
     }
 }

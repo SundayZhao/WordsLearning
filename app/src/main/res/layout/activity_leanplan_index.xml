@@ -29,8 +29,6 @@
                 app:wlv_shapeType="circle"
                 app:wlv_round_rectangle="true"
                 app:wlv_triangle_direction="north"
-                app:wlv_titleCenterStrokeColor="@android:color/holo_blue_dark"
-                app:wlv_titleCenterStrokeWidth="3dp"
                 app:wlv_titleCenter="Center Title"
                 app:wlv_titleCenterColor="@android:color/white"
                 app:wlv_titleCenterSize="24sp"

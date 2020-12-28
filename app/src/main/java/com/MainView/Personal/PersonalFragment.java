@@ -3,8 +3,11 @@ package com.MainView.Personal;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +31,13 @@ import com.wildma.pictureselector.PictureBean;
 import com.wildma.pictureselector.PictureSelector;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class PersonalFragment extends Fragment {
@@ -117,6 +126,23 @@ public class PersonalFragment extends Fragment {
 //                        User.getInstance(getContext()).getWrongCollection().addWord(new Word("good"));
 //                        User.getInstance(getContext()).getWrongCollection().addWord(new Word("well"));
 //                        User.getInstance(getContext()).getWrongCollection().addWord(new Word("nice"));
+//
+//                        User.getInstance(getContext()).getDiffCollection().addWord(new Word("good"));
+//                        User.getInstance(getContext()).getDiffCollection().addWord(new Word("well"));
+//                        User.getInstance(getContext()).getDiffCollection().addWord(new Word("nice"));
+//
+//                        try {
+//                            SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+//
+//                            User.getInstance(getContext()).getLearnPlan().clockIn(dateFormat1.parse("2020-12-20"),50,40);
+//                            User.getInstance(getContext()).getLearnPlan().clockIn(dateFormat1.parse("2020-12-21"),40,40);
+//                            User.getInstance(getContext()).getLearnPlan().clockIn(dateFormat1.parse("2020-12-22"),50,40);
+//                            User.getInstance(getContext()).getLearnPlan().clockIn(dateFormat1.parse("2020-12-23"),60,40);
+//                        } catch (ParseException e) {
+//                            e.printStackTrace();
+//                        }
+
+
                         initprofilePhotoView();
                         qmuiPullRefreshLayout.finishRefresh();
                     }
@@ -181,11 +207,21 @@ public class PersonalFragment extends Fragment {
             if (data != null) {
                 PictureBean pictureBean = data.getParcelableExtra(PictureSelector.PICTURE_RESULT);
                 if (pictureBean.isCut()) {
-                    profilePhotoView.setImageBitmap(BitmapFactory.decodeFile(pictureBean.getPath()));
-                    User.getInstance(getContext()).setHeadImage(pictureBean.getPath());
+                    File fromFile=new File(pictureBean.getPath());
+                    File toFile=new File(getContext().getFilesDir(),"head/"+User.getInstance(getContext()).getUuid()+".jpg");
+                    copyfile(fromFile.getPath(), toFile.getPath());
+                    profilePhotoView.setImageBitmap(BitmapFactory.decodeFile(toFile.getPath()));
+                    User.getInstance(getContext()).setHeadImage(toFile.getPath());
                 } else {
-                    profilePhotoView.setImageURI(pictureBean.getUri());
-                    User.getInstance(getContext()).setHeadImage(pictureBean.getUri().getPath());
+                    String[] proj = { MediaStore.Images.Media.DATA };
+                    Cursor actualimagecursor = getActivity().getContentResolver().query(pictureBean.getUri(),proj,null,null,null);
+                    int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    actualimagecursor.moveToFirst();
+                    String img_path = actualimagecursor.getString(actual_image_column_index);
+                    File fromFile=new File(img_path);
+                    File toFile=new File(getContext().getFilesDir(),"head/"+User.getInstance(getContext()).getUuid()+".jpg");
+                    copyfile(fromFile.getPath(), toFile.getPath());
+                    profilePhotoView.setImageBitmap(BitmapFactory.decodeFile(toFile.getPath()));
                 }
 
                 //使用 Glide 加载图片
@@ -195,6 +231,49 @@ public class PersonalFragment extends Fragment {
             }
         }
     }
-}
+
+    public boolean copyfile(String oldPath$Name, String newPath$Name) {
+        try {
+            File oldFile = new File(oldPath$Name);
+            File newFile = new File(newPath$Name);
+            if (!oldFile.exists()) {
+                Log.e("--Method--", "copyFile:  oldFile not exist.");
+                return false;
+            } else if (!oldFile.isFile()) {
+                Log.e("--Method--", "copyFile:  oldFile not file.");
+                return false;
+            } else if (!oldFile.canRead()) {
+                Log.e("--Method--", "copyFile:  oldFile cannot read.");
+                return false;
+            }
+            if(newFile.exists()){
+                newFile.delete();
+            }
+            newFile.getParentFile().mkdirs();
+            newFile.createNewFile();
+            /* 如果不需要打log，可以使用下面的语句
+            if (!oldFile.exists() || !oldFile.isFile() || !oldFile.canRead()) {
+                return false;
+            }
+            */
+
+            FileInputStream fileInputStream = new FileInputStream(oldPath$Name);
+            FileOutputStream fileOutputStream = new FileOutputStream(newPath$Name);
+            byte[] buffer = new byte[1024];
+            int byteRead;
+            while (-1 != (byteRead = fileInputStream.read(buffer))) {
+                fileOutputStream.write(buffer, 0, byteRead);
+            }
+            fileInputStream.close();
+            fileOutputStream.flush();
+            fileOutputStream.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    }
 
 

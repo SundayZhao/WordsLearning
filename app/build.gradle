@@ -55,4 +55,8 @@ dependencies {
     //好看的对话框
     implementation 'com.github.cazaea:sweet-alert-dialog:1.0.0'
 
+    //仿IOS选择框
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
+
+
 }

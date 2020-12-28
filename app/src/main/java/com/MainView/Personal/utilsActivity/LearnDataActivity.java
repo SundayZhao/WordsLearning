@@ -1,6 +1,7 @@
 package com.MainView.Personal.utilsActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,8 @@ import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.ValueShape;
+import lecho.lib.hellocharts.model.Viewport;
+import lecho.lib.hellocharts.renderer.AxesRenderer;
 import lecho.lib.hellocharts.view.LineChartView;
 
 public class LearnDataActivity  extends Activity {
@@ -52,23 +55,28 @@ public class LearnDataActivity  extends Activity {
         //TODO:更新一下标题
         sumLearnWord.setText("我学过的单词总数:"+ String.valueOf(User.getInstance(getApplicationContext()).getLearnPlan().getHasLearned()));
         ArrayList<String> clockInList=User.getInstance(getApplicationContext()).getLearnPlan().getClockInDate();
+        ArrayList<String> studyLog=User.getInstance(getApplicationContext()).getLearnPlan().getStudyLog();
         lastUpdate.setText("上次更新日期："+clockInList.get(clockInList.size()-1));
+        studyLog.subList(Math.max(studyLog.size() - 10, 0),studyLog.size());
         //TODO：获取过去10天的学习单词记录，然后在折线图上面画出来
         //坐标点
         ArrayList<PointValue> mPointValues = new ArrayList<PointValue>();
+        ArrayList<PointValue> mPointValues_allword = new ArrayList<PointValue>();
         //x轴
         ArrayList<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
 
         //插入点
-        mAxisXValues.add(new AxisValue(0).setLabel("10-12"));
-        mAxisXValues.add(new AxisValue(1).setLabel("10-13"));
-        mAxisXValues.add(new AxisValue(2).setLabel("10-14"));
-        mPointValues.add(new PointValue(0, 20));
-        mPointValues.add(new PointValue(1, 30));
-        mPointValues.add(new PointValue(2, 50));
+        int step=0;
+        for(String logs:studyLog){
+            //logs =  data，allwords correctWords
+            String []log=logs.split(",");
+            mAxisXValues.add(new AxisValue(step).setLabel(log[0]));
+            mPointValues.add(new PointValue(step, Integer.parseInt(log[1])));
+            mPointValues_allword.add(new PointValue(step, Integer.parseInt(log[2])));
+            step++;
+        }
 
         Line line = new Line(mPointValues).setColor(Color.parseColor("#FFCD41"));  //折线的颜色（橙色）
-        List<Line> lines = new ArrayList<Line>();
         line.setShape(ValueShape.CIRCLE);//折线图上每个数据点的形状  这里是圆形 （有三种 ：ValueShape.SQUARE  ValueShape.CIRCLE  ValueShape.DIAMOND）
         line.setCubic(true);//曲线是否平滑，即是曲线还是折线
         line.setFilled(false);//是否填充曲线的面积
@@ -76,7 +84,19 @@ public class LearnDataActivity  extends Activity {
 //      line.setHasLabelsOnlyForSelected(true);//点击数据坐标提示数据（设置了这个line.setHasLabels(true);就无效）
         line.setHasLines(true);//是否用线显示。如果为false 则没有曲线只有点显示
         line.setHasPoints(true);//是否显示圆点 如果为false 则没有原点只有点显示（每个数据点都是个大的圆点）
+
+
+        Line line_allword = new Line(mPointValues_allword).setColor(Color.parseColor("#4B0082"));
+        line_allword.setShape(ValueShape.SQUARE);
+        line_allword.setCubic(true);
+        line_allword.setFilled(false);
+        line_allword.setHasLabels(true);
+        line_allword.setHasLines(true);
+        line_allword.setHasPoints(true);
+
+        List<Line> lines = new ArrayList<Line>();
         lines.add(line);
+        lines.add(line_allword);
         LineChartData data = new LineChartData();
         data.setLines(lines);
 
@@ -98,17 +118,31 @@ public class LearnDataActivity  extends Activity {
         axisY.setName("");//y轴标注
         axisY.setTextSize(10);//设置字体大小
         axisY.setMaxLabelChars(6);
+        List<AxisValue> values = new ArrayList<>();
+        values.add(new AxisValue(20));
+        values.add(new AxisValue(30));
+        values.add(new AxisValue(40));
+        values.add(new AxisValue(50));
+        values.add(new AxisValue(60));
+        axisY.setValues(values);
         data.setAxisYLeft(axisY);  //Y轴设置在左边
+
         //data.setAxisYRight(axisY);  //y轴设置在右边
 
 
         //设置行为属性，支持缩放、滑动以及平移
-        lineChartView.setInteractive(true);
+        lineChartView.setInteractive(false);
         lineChartView.setZoomType(ZoomType.HORIZONTAL);
-        lineChartView.setMaxZoom((float) 2);//最大方法比例
+        lineChartView.setMaxZoom((float) 1);//最大方法比例
         lineChartView.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
         lineChartView.setLineChartData(data);
         lineChartView.setVisibility(View.VISIBLE);
+
+        Viewport v = new Viewport(lineChartView.getMaximumViewport());
+        v.top = 60;
+        v.bottom= 20;
+        lineChartView.setMaximumViewport(v);
+        lineChartView.setCurrentViewport(v);
     }
 
 }

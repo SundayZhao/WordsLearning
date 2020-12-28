@@ -37,6 +37,7 @@ public class RemotoDatabase extends SQLiteOpenHelper {
             "LearnPlanId INT UNIQUE, " +
             "wordBookId INTEGER, " +
             "hasLearned INT, " +
+            "learndaily INT, "+
             "weChartOrderId STRING, " +
             "last_Signin TEXT," +
             "studylog TEXT );";

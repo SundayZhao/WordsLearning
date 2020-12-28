@@ -97,7 +97,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
+        <!--        学习计划窗口-->
+        <activity android:name=".MainView.Personal.utilsActivity.LearnPlanActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.LearnPlanActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".MainView.LearnWords.WordsRemember">
             <intent-filter>
                 <action android:name="android.intent.action.WordsRemember" />
