@@ -114,6 +114,7 @@ public class LearnPlan {
         return hasLearned;
     }
 
+    //传入今天学习过的单词数
     public void setHasLearned(int hasLearned) {
         RemotoDatabase.getInstance(appContext).
                 updateSqlite(TABLE_NAME,
@@ -145,7 +146,7 @@ public class LearnPlan {
     public ArrayList<String> getStudyLog(){
         return study_log;
     }
-    //打卡，具体的返回参数之后再说明
+    //打卡，今日日期，今天学习的总数，正确的数
     public int clockIn(Date date,int allWords,int correctWords){
         SimpleDateFormat  format= new SimpleDateFormat("yyyy年MM月dd日");
         last_Signin.add(format.format(date));
@@ -176,6 +177,7 @@ public class LearnPlan {
         contentValues.put("wordBookId",NO_PLAN);
         contentValues.put("weChartOrderId","");
         contentValues.put("last_Signin","");
+        contentValues.put("studylog","");
         RemotoDatabase.getInstance(appContext).addSqllite(TABLE_NAME,contentValues);
     }
 
