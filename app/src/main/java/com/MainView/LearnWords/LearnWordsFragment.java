@@ -21,6 +21,7 @@ import com.MainView.MainActivity;
 import com.R;
 import com.Unit.LearnPlan;
 import com.Unit.User;
+import com.UserView.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -86,9 +87,15 @@ public class LearnWordsFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), WordsRemember.class);
-                String data = null;
-                intent.putExtra(EXTRA_MESSAGE, data);
+                Intent intent = null;
+                if(User.getInstance(getContext()).isLogged()){
+                    intent = new Intent(getContext(), WordsRemember.class);
+                }else {
+                    intent = new Intent(getContext(), LoginActivity.class);
+
+                }
+//                String data = null;
+//                intent.putExtra(EXTRA_MESSAGE, data);
                 startActivity(intent);
             }
         });

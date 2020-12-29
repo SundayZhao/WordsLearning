@@ -78,11 +78,11 @@ public class WordBook {
             String csvLine;
             while ((csvLine = reader.readLine()) != null) {
                 String[] row = csvLine.split(",");
-                Word word = new Word(row[0]);
-                word.setChinese(row[1]);
+                Word word = new Word(row[0].replaceAll("\"", ""));
+                word.setChinese(row[1].replaceAll("\"", ""));
                 words.add(word);
                 cnt++;
-                if(cnt>=100) break;
+                if(cnt>=10) break;
             }
         }
         catch (IOException ex) {
@@ -96,6 +96,10 @@ public class WordBook {
                 throw new RuntimeException("Error while closing input stream: "+e);
             }
         }
+        words.remove(0);
+    }
 
+    public ArrayList<Word> getWords() {
+        return words;
     }
 }

@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.MainView.LearnWords.WordsRemember;
+import com.MainView.MainActivity;
 import com.R;
 import com.Unit.User;
 
@@ -39,6 +41,10 @@ public class LoginActivity  extends AppCompatActivity {
                 }else{
                     Toast.makeText(LoginActivity.this, "登录失败，账号密码错误", Toast.LENGTH_SHORT).show();
                 }
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                String data = null;
+//                intent.putExtra(EXTRA_MESSAGE, data);
+                startActivity(intent);
             }
         });
 

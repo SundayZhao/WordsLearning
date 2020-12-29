@@ -2,18 +2,23 @@ package com.MainView.LearnWords;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.R;
 import com.Unit.User;
 import com.Unit.Word;
 import com.Unit.WordBook;
+import com.Unit.WrongCollection;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WordsRemember extends AppCompatActivity {
@@ -22,20 +27,20 @@ public class WordsRemember extends AppCompatActivity {
     TextView ch = null;
     Button button1 = null;
     Button button2 = null;
-
+    boolean added = false;
+    EditText editText = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_words_remember);
         eng= findViewById(R.id.textView2);
         ch= findViewById(R.id.textView3);
-
+        editText = findViewById(R.id.input);
         button1 = findViewById(R.id.play);
         button2 = findViewById(R.id.next);
 
         User user = User.getInstance(null);
-        List<Word> words = null;
-
+        ArrayList<Word> words = user.getLearnPlan().getWordBook().getWords();
         eng.setText(words.get(0).getEnglish());
         ch.setText(words.get(0).getChinese());
 
@@ -45,10 +50,14 @@ public class WordsRemember extends AppCompatActivity {
                 String word = (String) eng.getText();
                 try {
                     MediaPlayer player = new MediaPlayer();
-                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    player.setAudioAttributes( new AudioAttributes
+                            .Builder()
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .build());
                     String link = "http://dict.youdao.com/dictvoice?type=0&audio=" + word;
                     player.setDataSource(link);
-                    player.prepare();
+//                    player.prepare();
                     player.start();
 
                 } catch (Exception e) {
@@ -60,13 +69,24 @@ public class WordsRemember extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (words.size()>0){
-                    words.remove(0);
-                    eng.setText(words.get(0).getEnglish());
-                    ch.setText(words.get(0).getChinese());
-                }
-                else{
-                    finish();
+                String input_eng = editText.getText().toString();
+                if (input_eng.equals(words.get(0).getEnglish())){
+                    Toast.makeText(getApplicationContext(),"拼写正确",Toast.LENGTH_LONG).show();
+                    if (words.size()>0){
+                        words.remove(0);
+                        added = false;
+                        eng.setText(words.get(0).getEnglish());
+                        ch.setText(words.get(0).getChinese());
+                    }
+                    else{
+                        finishActivity(0);
+                    }
+                }else {
+                    Toast.makeText(getApplicationContext(),"拼写错误",Toast.LENGTH_LONG).show();
+                    if (!added) {
+                        user.getWrongCollection().addWord(words.get(0));
+                        added = true;
+                    }
                 }
             }
         });
