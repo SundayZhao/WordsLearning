@@ -63,6 +63,11 @@ public class LearnWordsFragment extends Fragment {
             //加载数据()
             isFirstLoad = false;
         }
+        if (User.getInstance(getContext()).isLogged()) {
+            calendarView.markDate(new DateData(2020, 12, 28).setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND, Color.GREEN)));
+            calendarView.markDate(new DateData(2020, 12, 29).setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND, Color.GREEN)));
+            calendarView.markDate(new DateData(2020, 12, 30).setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND, Color.GREEN)));
+        }
     }
 
     /**
@@ -116,7 +121,7 @@ public class LearnWordsFragment extends Fragment {
 //        }
 
 //        calendarView.markDate(finished_dates.get(0));
-        calendarView.markDate(new DateData(2016, 3, 1).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.RED)));
+
     }
 
 
