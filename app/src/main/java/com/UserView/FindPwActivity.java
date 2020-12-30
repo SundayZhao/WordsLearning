@@ -44,9 +44,14 @@ public class FindPwActivity extends AppCompatActivity {
                 String phone = mEdit_fpwPhone.getText().toString();                   //获取电话
                 String identifynum = mEdit_fpwIdenNum.getText().toString();            //获取输入的验证码
                 //判断手机号、新密码等合法性
+                String phonecheck ="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$";
                 if(11 != phone.length())
                 {
                     mEdit_fpwPhone.setError("手机输入不正确");
+                }
+                else if(!phone.matches(phonecheck))
+                {
+                    mEdit_fpwPhone.setError("手机号有误");
                 }
                 else if(6 > newpw.length())
                 {
