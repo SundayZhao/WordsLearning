@@ -102,4 +102,14 @@ public class WordBook {
     public ArrayList<Word> getWords() {
         return words;
     }
+
+    public String getChinese(String eng){
+        String ret = "";
+        for(int i=0; i<words.size(); i++){
+            if(words.get(i).getEnglish().equals(eng)){
+                ret = words.get(i).getChinese();
+            }
+        }
+        return ret;
+    }
 }
