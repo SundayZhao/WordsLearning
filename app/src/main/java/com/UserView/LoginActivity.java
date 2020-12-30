@@ -10,8 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MainView.LearnWords.WordsRemember;
-import com.MainView.MainActivity;
 import com.R;
 import com.Unit.User;
 
@@ -36,15 +34,22 @@ public class LoginActivity  extends AppCompatActivity {
             public void onClick(View v) {
                 String username = edt_username.getText().toString().trim();        //获取用户名
                 String password = edt_password.getText().toString().trim();        //获取密码
-                if(User.getInstance(getApplicationContext()).logIn(username,password)==User.LOG_LOGIN_SUCCESS) {
-                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(LoginActivity.this, "登录失败，账号密码错误", Toast.LENGTH_SHORT).show();
+                //限制账号密码短于6位
+                if(6 > edt_username.getText().toString().length())
+                {
+                    edt_username.setError("用户名不足6位");
                 }
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                String data = null;
-//                intent.putExtra(EXTRA_MESSAGE, data);
-                startActivity(intent);
+                else if(6 > edt_password.getText().toString().length())
+                {
+                    edt_password.setError("密码不足6位");
+                }
+                else {
+                    if (User.getInstance(getApplicationContext()).logIn(username, password) == User.LOG_LOGIN_SUCCESS) {
+                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "登录失败，账号密码错误", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
 

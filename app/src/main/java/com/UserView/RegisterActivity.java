@@ -39,11 +39,36 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = mEdt_regPassWord.getText().toString().trim();         //获取注册密码
                 String passwordcf = mEdt_regPassWordCf.getText().toString().trim();       //获取密码确认
                 String nikename = mEdt_regNikeName.getText().toString().trim();           //获取昵称
-                //对比已有账号，是否是新账号，否则注册新账号并提示“注册成功，返回登录界面”
-                if(!password.equals(passwordcf)){
-                    Toast.makeText(RegisterActivity.this,"两次密码输入不一致",LENGTH_SHORT).show();
+                //判断用户名、密码、邮箱等的合法性
+                if(6 > mEdt_regUsername.getText().toString().length())
+                {
+                    mEdt_regUsername.setError("用户名小于6位");
+                }
+                else if(9 > mEdt_regEmail.getText().toString().length())
+                {
+                    mEdt_regEmail.setError("邮箱输入有误");
+                }
+                else if(11 != mEdt_regPhone.getText().toString().length())
+                {
+                    mEdt_regPhone.setError("手机输入有误");
+                }
+                else if(6 > mEdt_regNikeName.getText().toString().length())
+                {
+                    mEdt_regNikeName.setError("昵称小于6位");
+                }
+                else if(6 > mEdt_regPassWord.getText().toString().length())
+                {
+                    mEdt_regPassWord.setError("密码小于6位");
+                }
+                else if(6 > mEdt_regPassWordCf.getText().toString().length())
+                {
+                    mEdt_regPassWordCf.setError("密码小于6位");
+                }
+                else if(!password.equals(passwordcf)){
+                    mEdt_regPassWordCf.setError("两次密码不一致");
                 }
                 else {
+                    //对比已有账号，是否是新账号，否则注册新账号并提示“注册成功，返回登录界面”
                     User.getInstance(getApplicationContext()).registe(username,password,nikename,email,phonenum);
                     Toast.makeText(RegisterActivity.this, "注册成功，返回登录界面", LENGTH_SHORT).show();
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);

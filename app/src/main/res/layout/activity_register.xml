@@ -9,11 +9,12 @@
         android:id="@+id/Reg_username"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="请输入您的账号"
+        android:hint="请输入您的账号名"
         android:gravity="center"
         android:layout_marginTop="70dp"
         android:maxLines="1"
         android:background="@drawable/login_text_frame"
+        android:maxLength="25"
         />
     <EditText
         android:id="@+id/Reg_email"
@@ -24,6 +25,7 @@
         android:layout_marginTop="10dp"
         android:maxLines="1"
         android:background="@drawable/login_text_frame"
+        android:maxLength="25"
         />
     <EditText
         android:id="@+id/Reg_phone"
@@ -33,7 +35,9 @@
         android:gravity="center"
         android:layout_marginTop="10dp"
         android:maxLines="1"
+        android:inputType="number"
         android:background="@drawable/login_text_frame"
+        android:maxLength="11"
         />
     <EditText
         android:id="@+id/Reg_nikename"
@@ -43,8 +47,8 @@
         android:gravity="center"
         android:layout_marginTop="10dp"
         android:maxLines="1"
-        android:inputType="textPassword"
         android:background="@drawable/login_text_frame"
+        android:maxLength="20"
         />
     <EditText
         android:id="@+id/Reg_password"
@@ -56,6 +60,7 @@
         android:maxLines="1"
         android:inputType="textPassword"
         android:background="@drawable/login_text_frame"
+        android:maxLength="25"
         />
     <EditText
         android:id="@+id/Reg_passwordcf"
@@ -67,6 +72,7 @@
         android:maxLines="1"
         android:inputType="textPassword"
         android:background="@drawable/login_text_frame"
+        android:maxLength="25"
         />
     <Button
         android:id="@+id/Reg_regist"
