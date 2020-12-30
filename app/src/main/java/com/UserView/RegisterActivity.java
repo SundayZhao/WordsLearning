@@ -40,15 +40,21 @@ public class RegisterActivity extends AppCompatActivity {
                 String passwordcf = mEdt_regPassWordCf.getText().toString().trim();       //获取密码确认
                 String nikename = mEdt_regNikeName.getText().toString().trim();           //获取昵称
                 //判断用户名、密码、邮箱等的合法性
+                String mailcheck ="^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)" + "?\\.)+[a-zA-Z]{2,}$";
+                String phonecheck ="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$";
                 if(6 > mEdt_regUsername.getText().toString().length())
                 {
                     mEdt_regUsername.setError("用户名小于6位");
                 }
-                else if(9 > mEdt_regEmail.getText().toString().length())
+                else if(!(email.matches(mailcheck)))
                 {
                     mEdt_regEmail.setError("邮箱输入有误");
                 }
                 else if(11 != mEdt_regPhone.getText().toString().length())
+                {
+                    mEdt_regPhone.setError("手机位数不足");
+                }
+                else if(phonenum.matches(phonecheck))
                 {
                     mEdt_regPhone.setError("手机输入有误");
                 }
