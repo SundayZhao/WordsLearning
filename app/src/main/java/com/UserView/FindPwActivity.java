@@ -68,6 +68,7 @@ public class FindPwActivity extends AppCompatActivity {
                     Toast.makeText(FindPwActivity.this, "密码找回成功！", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(FindPwActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -78,6 +79,7 @@ public class FindPwActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(FindPwActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

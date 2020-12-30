@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.R;
 import com.Unit.User;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -54,7 +57,10 @@ public class RegisterActivity extends AppCompatActivity {
                 {
                     mEdt_regPhone.setError("手机位数不足");
                 }
-
+                else if(!phonenum.matches(phonecheck))
+                {
+                    mEdt_regPhone.setError("手机号有误");
+                }
                 else if(6 > mEdt_regNikeName.getText().toString().length())
                 {
                     mEdt_regNikeName.setError("昵称小于6位");
@@ -76,6 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "注册成功，返回登录界面", LENGTH_SHORT).show();
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    finish();
                     //注册成功则返回提示框“注册成功”，否则返回账号名已存在
                 }
             }
@@ -87,6 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
