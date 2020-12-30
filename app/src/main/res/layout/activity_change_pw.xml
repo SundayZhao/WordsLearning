@@ -6,54 +6,22 @@
     android:orientation="vertical"
     android:background="@drawable/login_background">
     <EditText
-        android:id="@+id/Reg_username"
+        android:id="@+id/Cpw_oldpw"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="请输入您的账号名"
+        android:hint="请输入旧密码"
         android:gravity="center"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="200dp"
         android:maxLines="1"
         android:background="@drawable/login_text_frame"
         android:maxLength="25"
+        android:inputType="textPassword"
         />
     <EditText
-        android:id="@+id/Reg_email"
+        android:id="@+id/Cpw_newpw"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="请输入您的邮箱"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:maxLines="1"
-        android:background="@drawable/login_text_frame"
-        />
-    <EditText
-        android:id="@+id/Reg_phone"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="请输入您的电话"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:maxLines="1"
-        android:inputType="number"
-        android:background="@drawable/login_text_frame"
-        android:maxLength="11"
-        />
-    <EditText
-        android:id="@+id/Reg_nikename"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="请输入您的昵称"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:maxLines="1"
-        android:background="@drawable/login_text_frame"
-        android:maxLength="20"
-        />
-    <EditText
-        android:id="@+id/Reg_password"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="请输入您的密码"
+        android:hint="请输入新密码"
         android:gravity="center"
         android:layout_marginTop="10dp"
         android:maxLines="1"
@@ -62,10 +30,10 @@
         android:maxLength="25"
         />
     <EditText
-        android:id="@+id/Reg_passwordcf"
+        android:id="@+id/Cpw_newpwcf"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="请再次输入您的密码"
+        android:hint="请确认新密码"
         android:gravity="center"
         android:layout_marginTop="10dp"
         android:maxLines="1"
@@ -74,10 +42,10 @@
         android:maxLength="25"
         />
     <Button
-        android:id="@+id/Reg_regist"
+        android:id="@+id/Cpw_change"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="注    册"
+        android:text="修改密码"
         android:textSize="20sp"
         android:layout_marginTop="20dp"
         android:textStyle="bold"
@@ -85,7 +53,7 @@
         android:background="@drawable/login_button"
         />
     <Button
-        android:id="@+id/Reg_turnback"
+        android:id="@+id/Cpw_turnback"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="返    回"

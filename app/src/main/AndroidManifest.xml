@@ -39,6 +39,16 @@
             </intent-filter>
         </activity>
 
+        <!--        修改密码窗口-->
+        <activity android:name=".UserView.ChangePwActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.ChangePwActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
         <activity android:name=".MainView.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

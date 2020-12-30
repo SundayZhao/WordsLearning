@@ -201,7 +201,7 @@ public class LearnPlan {
         setCreateTime("");
     }
     public boolean is_noPlan(){
-        if (createTime==null ||createTime==""){
+        if (createTime==null ||createTime.equals("")){
           return true;
         }
         else return true;
