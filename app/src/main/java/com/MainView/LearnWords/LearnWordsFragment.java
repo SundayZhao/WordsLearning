@@ -63,7 +63,7 @@ public class LearnWordsFragment extends Fragment {
             //加载数据()
             isFirstLoad = false;
         }
-        if (User.getInstance(getContext()).isLogged()) {
+        if (User.getInstance(getContext()).isLogged()&&calendarView!=null) {
             calendarView.markDate(new DateData(2020, 12, 28).setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND, Color.GREEN)));
             calendarView.markDate(new DateData(2020, 12, 29).setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND, Color.GREEN)));
             calendarView.markDate(new DateData(2020, 12, 30).setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND, Color.GREEN)));
