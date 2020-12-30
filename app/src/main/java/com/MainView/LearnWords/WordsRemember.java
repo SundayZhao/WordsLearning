@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.MainView.Personal.utilsActivity.WrongColeectionActivity;
 import com.R;
+import com.Unit.Collection;
 import com.Unit.Preference;
 import com.Unit.User;
 import com.Unit.Word;
@@ -25,6 +26,7 @@ import com.Unit.WrongCollection;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +54,9 @@ public class WordsRemember extends Activity {
 
         User user = User.getInstance(null);
         ArrayList<Word> words = user.getLearnPlan().getWordBook().getWords();
+        if (User.getInstance(getApplicationContext()).getPreference().getStudyInOrder()==1){
+            Collections.shuffle(words);
+        }
         words_num=User.getInstance(getApplicationContext()).getLearnPlan().getLearndaily();
         correct_num = words_num;
         eng.setText(words.get(0).getEnglish());
