@@ -14,6 +14,7 @@ import com.R;
 import com.Unit.Preference;
 import com.Unit.User;
 import com.Unit.Word;
+import com.Unit.WrongCollection;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
@@ -61,7 +62,7 @@ public class WrongColeectionActivity extends Activity {
             Map.Entry entry = (Map.Entry) iter.next();
             //Object key = entry.getKey();
             Word word =(Word) entry.getValue();
-            QMUICommonListItemView item = makeListItem(word.getEnglish(), word.getChinese());
+            QMUICommonListItemView item = makeListItem(word.getEnglish(), User.getInstance(getApplicationContext()).getLearnPlan().getWordBook().getChinese(word.getEnglish()));
             section.addItemView(item,onClickListener);
         }
         section.addTo(mGroupListView);
@@ -84,16 +85,8 @@ public class WrongColeectionActivity extends Activity {
                 String word = v.getTag().toString();
                 String url = "https://dict.youdao.com/dictvoice?audio=" + word + "&type=" +
                         ((User.getInstance(getApplicationContext()).getPreference().getPronunciation() == Preference.PRONUNCIATION_US) ? "0" : "1");
-
-                MediaPlayer mediaPlayer = new MediaPlayer();
-                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);// 设置媒体流类型
-                try {
-                    mediaPlayer.setDataSource(url);
-                    mediaPlayer.prepareAsync();
-                    mediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                MediaPlayer mediaPlayer = MediaPlayer.create(WrongColeectionActivity.this, Uri.parse(url));
+                mediaPlayer.start();
 
             }
         });
