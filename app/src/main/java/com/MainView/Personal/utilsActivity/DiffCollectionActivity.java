@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class DiffCollectionActivity extends Activity {
             Map.Entry entry = (Map.Entry) iter.next();
             //Object key = entry.getKey();
             Word word = (Word) entry.getValue();
-            QMUICommonListItemView item = makeListItem(word.getEnglish(), word.getChinese());
+            QMUICommonListItemView item = makeListItem(word.getEnglish(), User.getInstance(getApplicationContext()).getLearnPlan().getWordBook().getChinese(word.getEnglish()));
             section.addItemView(item, onClickListener);
         }
         section.addTo(mGroupListView);
@@ -83,19 +84,8 @@ public class DiffCollectionActivity extends Activity {
                 String word = v.getTag().toString();
                 String url = "http://dict.youdao.com/dictvoice?audio=" + word + "&type=" +
                         ((User.getInstance(getApplicationContext()).getPreference().getPronunciation() == Preference.PRONUNCIATION_US) ? "0" : "1");
-                MediaPlayer mediaPlayer = new MediaPlayer();
-                //AudioAttributes是一个封装音频各种属性的类
-                AudioAttributes.Builder attrBuilder = new AudioAttributes.Builder();
-                //设置音频流的合适属性
-                attrBuilder.setLegacyStreamType(AudioManager.STREAM_MUSIC);
-                mediaPlayer.setAudioAttributes(attrBuilder.build());
-                try {
-                    mediaPlayer.setDataSource(url);
-                    mediaPlayer.prepare();
-                    mediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                MediaPlayer mediaPlayer = MediaPlayer.create(DiffCollectionActivity.this, Uri.parse(url));
+                mediaPlayer.start();
 
             }
         });

@@ -2,9 +2,11 @@ package com.MainView.LearnWords;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.MainView.Personal.utilsActivity.WrongColeectionActivity;
 import com.R;
 import com.Unit.Preference;
 import com.Unit.User;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class WordsRemember extends AppCompatActivity {
+public class WordsRemember extends Activity {
 
     TextView eng = null;
     TextView ch = null;
@@ -49,7 +52,7 @@ public class WordsRemember extends AppCompatActivity {
 
         User user = User.getInstance(null);
         ArrayList<Word> words = user.getLearnPlan().getWordBook().getWords();
-        words_num = words.size();
+        words_num=User.getInstance(getApplicationContext()).getLearnPlan().getLearndaily();
         correct_num = words_num;
         eng.setText(words.get(0).getEnglish());
         eng.setVisibility(View.INVISIBLE);
@@ -61,19 +64,8 @@ public class WordsRemember extends AppCompatActivity {
                 String word = (String) eng.getText();
                 String url = "http://dict.youdao.com/dictvoice?audio=" + word + "&type=" +
                         ((User.getInstance(getApplicationContext()).getPreference().getPronunciation() == Preference.PRONUNCIATION_US) ? "0" : "1");
-                MediaPlayer mediaPlayer = new MediaPlayer();
-                //AudioAttributes是一个封装音频各种属性的类
-                AudioAttributes.Builder attrBuilder = new AudioAttributes.Builder();
-                //设置音频流的合适属性
-                attrBuilder.setLegacyStreamType(AudioManager.STREAM_MUSIC);
-                mediaPlayer.setAudioAttributes(attrBuilder.build());
-                try {
-                    mediaPlayer.setDataSource(url);
-                    mediaPlayer.prepare();
-                    mediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                MediaPlayer mediaPlayer = MediaPlayer.create(WordsRemember.this, Uri.parse(url));
+                mediaPlayer.start();
             }
         });
 
