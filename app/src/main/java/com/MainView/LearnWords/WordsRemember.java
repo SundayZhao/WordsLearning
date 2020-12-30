@@ -14,11 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.R;
+import com.Unit.Preference;
 import com.Unit.User;
 import com.Unit.Word;
 import com.Unit.WordBook;
 import com.Unit.WrongCollection;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,20 +59,20 @@ public class WordsRemember extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String word = (String) eng.getText();
+                String url = "http://dict.youdao.com/dictvoice?audio=" + word + "&type=" +
+                        ((User.getInstance(getApplicationContext()).getPreference().getPronunciation() == Preference.PRONUNCIATION_US) ? "0" : "1");
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                //AudioAttributes是一个封装音频各种属性的类
+                AudioAttributes.Builder attrBuilder = new AudioAttributes.Builder();
+                //设置音频流的合适属性
+                attrBuilder.setLegacyStreamType(AudioManager.STREAM_MUSIC);
+                mediaPlayer.setAudioAttributes(attrBuilder.build());
                 try {
-                    MediaPlayer player = new MediaPlayer();
-//                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    player.setAudioAttributes( new AudioAttributes
-                            .Builder()
-                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                            .build());
-                    String link = "http://dict.youdao.com/dictvoice?type=0&audio=" + word;
-                    player.setDataSource(link);
-//                    player.prepare();
-                    player.start();
-
-                } catch (Exception e) {
-
+                    mediaPlayer.setDataSource(url);
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         });
