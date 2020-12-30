@@ -82,7 +82,7 @@ public class WordBook {
                 word.setChinese(row[1].replaceAll("\"", ""));
                 words.add(word);
                 cnt++;
-                if(cnt>=10) break;
+                if(cnt>=5) break;
             }
         }
         catch (IOException ex) {

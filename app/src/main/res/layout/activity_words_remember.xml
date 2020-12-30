@@ -9,22 +9,23 @@
     tools:context="com.MainView.MainActivity">
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="370dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
-
-    <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="110dp"
+        android:layout_height="285dp"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="140dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
     <Button
         android:id="@+id/play"
@@ -44,4 +45,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="next" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
 </LinearLayout>
