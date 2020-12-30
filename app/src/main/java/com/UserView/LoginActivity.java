@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.MainView.Personal.PersonalFragment;
 import com.R;
 import com.Unit.User;
 
@@ -46,6 +47,10 @@ public class LoginActivity  extends AppCompatActivity {
                 else {
                     if (User.getInstance(getApplicationContext()).logIn(username, password) == User.LOG_LOGIN_SUCCESS) {
                         Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                        Intent intent = getIntent();
+                        setResult(PersonalFragment.LOGINSUCCESS,intent);
+                        finish();
+
                     } else {
                         Toast.makeText(LoginActivity.this, "登录失败，账号密码错误", Toast.LENGTH_SHORT).show();
                     }

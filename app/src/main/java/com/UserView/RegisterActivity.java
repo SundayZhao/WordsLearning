@@ -54,10 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
                 {
                     mEdt_regPhone.setError("手机位数不足");
                 }
-                else if(phonenum.matches(phonecheck))
-                {
-                    mEdt_regPhone.setError("手机输入有误");
-                }
+
                 else if(6 > mEdt_regNikeName.getText().toString().length())
                 {
                     mEdt_regNikeName.setError("昵称小于6位");
