@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /*
@@ -82,7 +83,7 @@ public class WordBook {
                 word.setChinese(row[1].replaceAll("\"", ""));
                 words.add(word);
                 cnt++;
-                if(cnt>=5) break;
+                if(cnt>=100) break;
             }
         }
         catch (IOException ex) {
@@ -110,6 +111,16 @@ public class WordBook {
                 ret = words.get(i).getChinese();
             }
         }
+        return ret;
+    }
+
+    private static HashMap<String, Integer> get_word_books(){
+        HashMap<String, Integer> ret = new  HashMap<String, Integer>();
+        ret.put("四级词汇", 2564);
+        ret.put("六级词汇", 3748);
+        ret.put("托福词汇", 4156);
+        ret.put("雅思词汇", 4962);
+        ret.put("GRE词汇", 8945);
         return ret;
     }
 }
