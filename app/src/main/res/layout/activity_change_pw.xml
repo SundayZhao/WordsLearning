@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    android:orientation="vertical"
+    android:background="@drawable/login_background">
+    <EditText
+        android:id="@+id/Cpw_oldpw"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="请输入旧密码"
+        android:gravity="center"
+        android:layout_marginTop="200dp"
+        android:maxLines="1"
+        android:background="@drawable/login_text_frame"
+        android:maxLength="25"
+        android:inputType="textPassword"
+        />
+    <EditText
+        android:id="@+id/Cpw_newpw"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="请输入新密码"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:maxLines="1"
+        android:inputType="textPassword"
+        android:background="@drawable/login_text_frame"
+        android:maxLength="25"
+        />
+    <EditText
+        android:id="@+id/Cpw_newpwcf"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="请确认新密码"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:maxLines="1"
+        android:inputType="textPassword"
+        android:background="@drawable/login_text_frame"
+        android:maxLength="25"
+        />
+    <Button
+        android:id="@+id/Cpw_change"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="修改密码"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:background="@drawable/login_button"
+        />
+    <Button
+        android:id="@+id/Cpw_turnback"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="返    回"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:background="@drawable/login_button"
+        />
+</LinearLayout>

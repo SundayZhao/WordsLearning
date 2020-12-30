@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.R;
 
 public class FindPwActivity extends AppCompatActivity {
-    private Button mBtn_fpwSendIdenCode,mBtn_fpwIdentify;
+    private Button mBtn_fpwSendIdenCode,mBtn_fpwIdentify,mBtn_fpwTurnBack;
     private EditText mEdit_fpwNewpw,mEdit_fpwNewpwcf,mEdit_fpwPhone,mEdit_fpwIdenNum;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -25,6 +25,7 @@ public class FindPwActivity extends AppCompatActivity {
         mBtn_fpwSendIdenCode = findViewById(R.id.Fpw_sentidentify);
         mBtn_fpwIdentify = findViewById(R.id.Fpw_identify);
         mEdit_fpwIdenNum = findViewById(R.id.Fpw_idencode);
+        mBtn_fpwTurnBack = findViewById(R.id.Fpw_turnback);
 
         //发送验证码
         mBtn_fpwSendIdenCode.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +72,14 @@ public class FindPwActivity extends AppCompatActivity {
             }
         });
 
-
+        //返回按钮
+        mBtn_fpwTurnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FindPwActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
