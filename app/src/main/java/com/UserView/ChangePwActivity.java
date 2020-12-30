@@ -50,7 +50,7 @@ public class ChangePwActivity extends AppCompatActivity {
                     getmEdit_cpwNewPwCf.setError("两次密码不一致");
                 }
                 else{
-                    //修改密码，并返回登录界面？？
+                    //修改密码，并返回登录界面？？？
                     User.getInstance(getApplicationContext()).changePassword(newpassword);
                     Toast.makeText(ChangePwActivity.this, "密码修改成功", LENGTH_SHORT).show();
                     Intent intent = new Intent(ChangePwActivity.this, LoginActivity.class);
