@@ -82,7 +82,7 @@ public class WordBook {
                 word.setChinese(row[1].replaceAll("\"", ""));
                 words.add(word);
                 cnt++;
-                if(cnt>=10) break;
+                if(cnt>=5) break;
             }
         }
         catch (IOException ex) {
@@ -101,5 +101,15 @@ public class WordBook {
 
     public ArrayList<Word> getWords() {
         return words;
+    }
+
+    public String getChinese(String eng){
+        String ret = "";
+        for(int i=0; i<words.size(); i++){
+            if(words.get(i).getEnglish().equals(eng)){
+                ret = words.get(i).getChinese();
+            }
+        }
+        return ret;
     }
 }
