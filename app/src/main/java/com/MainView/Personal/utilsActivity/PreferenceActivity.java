@@ -1,6 +1,7 @@
 package com.MainView.Personal.utilsActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.TypedValue;
@@ -62,6 +63,8 @@ public class PreferenceActivity extends Activity {
                             public void onClick(SweetAlertDialog sDialog) {
                                 User.getInstance(getApplicationContext()).logOut();
                                 sDialog.dismissWithAnimation();
+                                sendBroadcast(new Intent("broadsend.logout"));
+                                finish();
                             }
                         })
                         .show();
@@ -121,6 +124,7 @@ public class PreferenceActivity extends Activity {
                         break;
                     case SELECT_PASSWORD:
                         //跳转到修改密码的窗口
+                        //Intent intent=new Intent(PreferenceActivity.this,)
                         break;
                     case SELECT_PHONE:
                         builder.setTitle("改个手机号")

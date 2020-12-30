@@ -29,9 +29,9 @@ public class LearnPlanActivity extends Activity {
     private static final int SELECT_DAILYWORDSNUM = 1;
     private static final int SELECT_CHECKINDAYS = 2;
     private static final int SELECT_GIVEUPPLAN = 3;
+    private static ArrayList<String> dailyLearnNum = new ArrayList<String>();
     private QMUIGroupListView mGroupListView = null;
     private WaveLoadingView mWaveLoadingView = null;
-    private static ArrayList<String> dailyLearnNum = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +51,17 @@ public class LearnPlanActivity extends Activity {
 
     //初始化圆形进度条
     private void initWaveView() {
+        if(User.getInstance(getApplicationContext()).getLearnPlan().is_noPlan()){
+            mWaveLoadingView.setCenterTitle("计划进度:0%");
+            mWaveLoadingView.setProgressValue(0);
+        }else {
+            //TODO:计划进度
+            mWaveLoadingView.setCenterTitle("计划进度:48%");
+            mWaveLoadingView.setProgressValue(48);
+        }
         mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.CIRCLE);
-        mWaveLoadingView.setCenterTitle("计划进度:48%");
         mWaveLoadingView.setCenterTitleColor(Color.parseColor("#FF69B4"));
         mWaveLoadingView.setBottomTitleSize(18);
-        mWaveLoadingView.setProgressValue(48);
         mWaveLoadingView.setBorderWidth(10);
         mWaveLoadingView.setAmplitudeRatio(60);
         mWaveLoadingView.setWaveColor(Color.parseColor("#E1FFFF"));
@@ -72,21 +78,21 @@ public class LearnPlanActivity extends Activity {
     //初始化下方列表
     private void initListItems() {
         //TODO:学习计划
-
+        User instanceUser=User.getInstance(getApplicationContext());
         int height = QMUIResHelper.getAttrDimen(getApplicationContext(), com.qmuiteam.qmui.R.attr.qmui_list_item_height);
-        QMUICommonListItemView item_curBook = makeListItem("当前单词书：", "",
+        QMUICommonListItemView item_curBook = makeListItem("当前单词书：", (instanceUser.getLearnPlan().is_noPlan()==false)?"暂时没有计划":"",
                 SELECT_CURBOOK, QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
 
         QMUICommonListItemView item_DaylyWordsNum = makeListItem("每日学习单词数：",
-                String.valueOf(User.getInstance(getApplicationContext()).getLearnPlan().getLearndaily() + "个"),
+                (instanceUser.getLearnPlan().is_noPlan())?"":String.valueOf(User.getInstance(getApplicationContext()).getLearnPlan().getLearndaily() + "个"),
                 SELECT_DAILYWORDSNUM, QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
 
         QMUICommonListItemView item_CheckIndays = makeListItem("已打卡天数：",
-                String.valueOf(User.getInstance(getApplicationContext()).getLearnPlan().getClockInDate().size()) + "天",
+                (instanceUser.getLearnPlan().is_noPlan()?"": String.valueOf(User.getInstance(getApplicationContext()).getLearnPlan().getClockInDate().size()) + "天"),
                 SELECT_CHECKINDAYS, QMUICommonListItemView.ACCESSORY_TYPE_NONE);
 
         QMUICommonListItemView item_CreateTime = makeListItem("计划创建日期：",
-                User.getInstance(getApplicationContext()).getLearnPlan().getCreateTime(),
+                (instanceUser.getLearnPlan().is_noPlan())?"": User.getInstance(getApplicationContext()).getLearnPlan().getCreateTime(),
                 SELECT_NOACITION, QMUICommonListItemView.ACCESSORY_TYPE_NONE);
 
         QMUICommonListItemView item_GiveupPlan = makeListItem("放弃计划", "",
@@ -98,7 +104,8 @@ public class LearnPlanActivity extends Activity {
             public void onClick(View v) {
                 //TODO:点击后弹出对应的窗口，简化用dialog
                 int selectId = (int) v.getTag();
-                System.out.println(selectId);
+                if(User.getInstance(getApplicationContext()).getLearnPlan().is_noPlan() && selectId!=SELECT_CURBOOK)
+                    return;
                 switch (selectId) {
                     case SELECT_CURBOOK:
                         //TODO:简洁，用WheelView直接选一个单词书
