@@ -34,12 +34,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我就是测试一下名字" />
+                        android:text="一号抬棺人"
+                        android:textSize="20dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n" />
+                        android:text="加纳的棺材各种各样，有诺基亚，飞机等各种加入现代创新元素的版本。虽然加纳依靠着黄金和石油的出口，不像部分非洲国家那样艰苦，" />
                 </LinearLayout>
 
                 <ImageView
@@ -73,12 +74,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我就是测试一下名字" />
+                        android:text="二号抬棺人"
+                        android:textSize="20dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n" />
+                        android:text="但对于平均年收入2000美元的加纳人来说，对失去亲人的缅怀仪式是非常隆重的，埋葬亲人需要的钱往往是他们数年的收入，但加纳人保持乐观，也许这就是他们对逝去亲人的悼念吧！" />
                 </LinearLayout>
 
                 <ImageView
@@ -88,7 +90,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="15dp"
                     android:layout_weight="3"
-                    android:src="@drawable/touxiang1" />
+                    android:src="@drawable/touxiang2" />
             </LinearLayout>
 
             <LinearLayout
@@ -112,12 +114,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我就是测试一下名字" />
+                        android:text="三号抬棺人"
+                        android:textSize="20dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n我就是测试一下简介\n" />
+                        android:text="我们是专业团队\n我们是专业团队\n我们是专业团队\n我们是专业团队\n非常非常的专业" />
                 </LinearLayout>
 
                 <ImageView
@@ -127,7 +130,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="15dp"
                     android:layout_weight="3"
-                    android:src="@drawable/touxiang1" />
+                    android:src="@drawable/touxiang3" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

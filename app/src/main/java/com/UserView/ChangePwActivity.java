@@ -29,14 +29,15 @@ public class ChangePwActivity extends AppCompatActivity {
         mBtn_cpwChangePw = findViewById(R.id.Cpw_change);
         mBtn_fpwTurnBack = findViewById(R.id.Cpw_turnback);
 
-        String oldpassword = mEdit_cpwOldPw.getText().toString().trim();              //获取旧密码
-        String newpassword = mEdit_cpwNewPw.getText().toString().trim();              //获取新密码
-        String newpasswordcf = mEdit_cpwNewPwCf.getText().toString().trim();       //获取新密码确认
+
 
         //修改密码按钮
         mBtn_cpwChangePw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String oldpassword = mEdit_cpwOldPw.getText().toString().trim();              //获取旧密码
+                String newpassword = mEdit_cpwNewPw.getText().toString().trim();              //获取新密码
+                String newpasswordcf = mEdit_cpwNewPwCf.getText().toString().trim();       //获取新密码确认
                 if(6 > mEdit_cpwNewPw.getText().toString().length())
                 {
                     mEdit_cpwNewPw.setError("密码小于6位");
@@ -51,7 +52,9 @@ public class ChangePwActivity extends AppCompatActivity {
                 }
                 else{
                     //修改密码
-                    User.getInstance(getApplicationContext()).changePassword(newpassword);
+                    String name=User.getInstance(getApplicationContext()).getUsername();
+                    User.getInstance(getApplicationContext()).changePassword(User.getInstance(getApplicationContext()).getUsername(),newpassword);
+                    User.getInstance(getApplicationContext()).logOut();
                     Toast.makeText(ChangePwActivity.this, "密码修改成功", LENGTH_SHORT).show();
                     finish();
                 }
@@ -62,8 +65,6 @@ public class ChangePwActivity extends AppCompatActivity {
         mBtn_fpwTurnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChangePwActivity.this, LoginActivity.class);
-                startActivity(intent);
                 finish();
             }
         });

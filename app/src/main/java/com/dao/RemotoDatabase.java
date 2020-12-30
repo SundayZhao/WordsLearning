@@ -53,7 +53,7 @@ public class RemotoDatabase extends SQLiteOpenHelper {
     private static final String CREATE_USER="CREATE TABLE user " +
             "(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "uuid INT UNIQUE, " +
-            "username STRING, "+
+            "username STRING UNIQUE, "+
             "password STRING, "+
             "nickname STRING, " +
             "LearnPlanId INT, " +

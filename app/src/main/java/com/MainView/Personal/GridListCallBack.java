@@ -26,7 +26,7 @@ public class GridListCallBack {
         this.context=context;
     }
     public void callbackFunction(int position){
-        if(context==null || User.getInstance(context).isLogged()==false)return;
+        if((context==null || User.getInstance(context).isLogged()==false) && position!=STATE_ABOUT_US && position!=STATE_FAVORATE && position!=STATE_USER_AGREEMENT)return;
         Intent intent = new Intent();
         //System.out.println(position);
         switch (position){

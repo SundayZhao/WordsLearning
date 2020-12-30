@@ -114,7 +114,7 @@ public class WordBook {
         return ret;
     }
 
-    private static HashMap<String, Integer> get_word_books(){
+    public static HashMap<String, Integer> get_word_books(){
         HashMap<String, Integer> ret = new  HashMap<String, Integer>();
         ret.put("四级词汇", 2564);
         ret.put("六级词汇", 3748);
@@ -122,5 +122,9 @@ public class WordBook {
         ret.put("雅思词汇", 4962);
         ret.put("GRE词汇", 8945);
         return ret;
+    }
+
+    public int getBookId() {
+        return bookId;
     }
 }

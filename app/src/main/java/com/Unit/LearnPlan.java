@@ -70,7 +70,7 @@ public class LearnPlan {
                 wordBook=new WordBook(appContext,String.valueOf(cursor.getInt(cursor.getColumnIndex("wordBookId"))));
                 hasLearned=cursor.getInt(cursor.getColumnIndex("hasLearned"));
                 weChartOrderId=cursor.getString(cursor.getColumnIndex("weChartOrderId"));
-                learndaily=(cursor.getInt(cursor.getColumnIndex("learndaily"))==0)?30:cursor.getInt(cursor.getColumnIndex("learndaily"));
+                learndaily=(cursor.getInt(cursor.getColumnIndex("learndaily"))==0)?20:cursor.getInt(cursor.getColumnIndex("learndaily"));
 
 
                 String temp=cursor.getString(cursor.getColumnIndex("last_Signin"));
@@ -204,11 +204,11 @@ public class LearnPlan {
         if (createTime==null ||createTime.equals("")){
           return true;
         }
-        else return true;
+        else return false;
     }
 
     public int getLearndaily() {
-        if(is_noPlan()==false)return 0;
+        if(is_noPlan())return 0;
         return learndaily;
     }
 

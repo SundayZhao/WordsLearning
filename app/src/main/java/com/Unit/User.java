@@ -210,8 +210,8 @@ public  class  User {
         this.headImage = headImage;
     }
 
-    public void changePassword(String password){
-        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,TABLE_COLUMN_ID,String.valueOf(uuid),new String[]{"password"},new String[]{password});
+    public void changePassword(String username ,String password){
+        RemotoDatabase.getInstance(AppContext).updateSqlite(TABLE_NAME,"username",username,new String[]{"password"},new String[]{password});
 
     }
 

@@ -1,6 +1,5 @@
 package com.UserView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,12 +9,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.R;
+import com.Unit.User;
 
 public class FindPwActivity extends AppCompatActivity {
-    private Button mBtn_fpwSendIdenCode,mBtn_fpwIdentify,mBtn_fpwTurnBack;
-    private EditText mEdit_fpwNewpw,mEdit_fpwNewpwcf,mEdit_fpwPhone,mEdit_fpwIdenNum;
+    private Button mBtn_fpwSendIdenCode, mBtn_fpwIdentify, mBtn_fpwTurnBack;
+    private EditText mEdit_fpwNewpw, mEdit_fpwNewpwcf, mEdit_fpwPhone, mEdit_fpwIdenNum;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_findpassword);
 
@@ -31,7 +32,7 @@ public class FindPwActivity extends AppCompatActivity {
         mBtn_fpwSendIdenCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(FindPwActivity.this,"发送成功！验证码为：665674",Toast.LENGTH_SHORT).show();
+                Toast.makeText(FindPwActivity.this, "发送成功！验证码为：665674", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -44,35 +45,20 @@ public class FindPwActivity extends AppCompatActivity {
                 String phone = mEdit_fpwPhone.getText().toString();                   //获取电话
                 String identifynum = mEdit_fpwIdenNum.getText().toString();            //获取输入的验证码
                 //判断手机号、新密码等合法性
-                String phonecheck ="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$";
-                if(11 != phone.length())
-                {
-                    mEdit_fpwPhone.setError("手机输入不正确");
-                }
-                else if(!phone.matches(phonecheck))
-                {
-                    mEdit_fpwPhone.setError("手机号有误");
-                }
-                else if(6 > newpw.length())
-                {
+                String phonecheck = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$";
+                if (phone.trim() == "") {
+                    mEdit_fpwPhone.setText("账号输入错误");
+                } else if (6 > newpw.length()) {
                     mEdit_fpwNewpw.setError("新密码小于6位");
-                }
-                else if(6 > newpwcf.length())
-                {
+                } else if (6 > newpwcf.length()) {
                     mEdit_fpwNewpwcf.setError("新密码小于6位");
-                }
-                else if(! newpw.equals(newpwcf))
-                {
+                } else if (!newpw.equals(newpwcf)) {
                     mEdit_fpwNewpwcf.setError("两次密码不一致");
-                }
-                else if( ! identifynum.equals("665674"))
-                {
+                } else if (!identifynum.equals("665674")) {
                     mEdit_fpwIdenNum.setError("验证码错误");
-                }
-                else {
+                } else {
+                    User.getInstance(getApplicationContext()).changePassword(phone.trim(), newpw);
                     Toast.makeText(FindPwActivity.this, "密码找回成功！", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(FindPwActivity.this, LoginActivity.class);
-                    startActivity(intent);
                     finish();
                 }
             }
@@ -82,8 +68,6 @@ public class FindPwActivity extends AppCompatActivity {
         mBtn_fpwTurnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FindPwActivity.this, LoginActivity.class);
-                startActivity(intent);
                 finish();
             }
         });

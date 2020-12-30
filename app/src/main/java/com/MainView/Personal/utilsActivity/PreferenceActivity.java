@@ -10,6 +10,7 @@ import android.view.View;
 import com.R;
 import com.Unit.Preference;
 import com.Unit.User;
+import com.UserView.ChangePwActivity;
 import com.cazaea.sweetalert.SweetAlertDialog;
 import com.dao.RemotoDatabase;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
@@ -18,7 +19,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-
+import com.wildma.pictureselector.PictureSelector;
 
 
 public class PreferenceActivity extends Activity {
@@ -112,6 +113,7 @@ public class PreferenceActivity extends Activity {
                                         String changeText=builder.getEditText().getText().toString();
                                         User.getInstance(getApplicationContext()).setNickName(changeText);
                                         ((QMUICommonListItemView)v).getDetailTextView().setText(changeText);
+                                        sendBroadcast(new Intent("broadsend.logout"));
                                         dialog.dismiss();
                                     }
                                 })
@@ -124,7 +126,8 @@ public class PreferenceActivity extends Activity {
                         break;
                     case SELECT_PASSWORD:
                         //跳转到修改密码的窗口
-                        //Intent intent=new Intent(PreferenceActivity.this,)
+                        Intent intent=new Intent(PreferenceActivity.this, ChangePwActivity.class);
+                        startActivityForResult(intent,200);
                         break;
                     case SELECT_PHONE:
                         builder.setTitle("改个手机号")
@@ -192,5 +195,15 @@ public class PreferenceActivity extends Activity {
         itemView.getTextView().setTextSize(TypedValue.COMPLEX_UNIT_DIP, TEXTSIZE);
             itemView.setTag(callbackId);
         return itemView;
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /*结果回调*/
+        if (requestCode == 200) {
+            //修改了密码
+            sendBroadcast(new Intent("broadsend.logout"));
+            finish();
+        }
     }
 }
