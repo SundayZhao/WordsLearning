@@ -75,7 +75,7 @@ public class RemotoDatabase extends SQLiteOpenHelper {
                 db.execSQL(CREATE_USER);
                 db.execSQL(CREATE_WrongCollection);
             }catch (SQLException e){
-                e.printStackTrace();
+                //e.printStackTrace();
             }
             db.close();
         }
