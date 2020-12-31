@@ -15,8 +15,9 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="@color/black" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/textView2"
