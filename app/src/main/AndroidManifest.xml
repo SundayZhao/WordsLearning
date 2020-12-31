@@ -12,6 +12,15 @@
         android:theme="@style/Theme.WordsLearning"
         android:usesCleartextTraffic="true">
 
+        <!--        Logo窗口-->
+        <activity android:name=".MainView.LogoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <!--        用户登录窗口-->
         <activity android:name=".UserView.LoginActivity">
             <intent-filter>
@@ -51,9 +60,9 @@
 
         <activity android:name=".MainView.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MainActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
